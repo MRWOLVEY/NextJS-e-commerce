@@ -9,9 +9,9 @@ import { assets } from "@/data/assets";
 import TextType from "./text-type/TextType";
 
 const Hero = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer: NodeJS.Timeout = setTimeout(() => {
       setLoading(false);
     }, 2000);
     return () => clearTimeout(timer);

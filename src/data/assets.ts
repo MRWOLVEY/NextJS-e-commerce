@@ -1,4 +1,7 @@
-export const assets = {
+type url = string;
+export const assets: { [key: string]: url } = {
+  apparel_bg: "/images/apparelbg.jpg",
+  glasses_bg: "/images/glassesbg.jpg",
   logo: "/images/logo.png",
   hero_img: "/images/hero_img.png",
   cart_icon: "/images/cart_icon.png",

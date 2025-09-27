@@ -4,6 +4,7 @@ export interface Product {
   description: string;
   price: number;
   image: string[];
+  type: "apparel" | "glasses";
   category: "Men" | "Women" | "Kids";
   subCategory: string;
   sizes: string[];
@@ -19,6 +20,7 @@ export const products: Product[] = [
       "A lightweight, usually knitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.",
     price: 100,
     image: ["/images/p_img1.png"],
+    type: "apparel",
     category: "Women",
     subCategory: "Topwear",
     sizes: ["S", "M", "L"],
@@ -42,6 +44,7 @@ export const products: Product[] = [
     sizes: ["M", "L", "XL"],
     date: 1716621345448,
     bestseller: true,
+    type: "apparel",
   },
   {
     _id: "aaaac",
@@ -55,6 +58,7 @@ export const products: Product[] = [
     sizes: ["S", "L", "XL"],
     date: 1716234545448,
     bestseller: true,
+    type: "apparel",
   },
   {
     _id: "aaaad",
@@ -68,6 +72,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "XXL"],
     date: 1716621345448,
     bestseller: true,
+    type: "apparel",
   },
   {
     _id: "aaaae",
@@ -81,6 +86,7 @@ export const products: Product[] = [
     sizes: ["M", "L", "XL"],
     date: 1716622345448,
     bestseller: true,
+    type: "apparel",
   },
   {
     _id: "aaaaf",
@@ -94,6 +100,7 @@ export const products: Product[] = [
     sizes: ["S", "L", "XL"],
     date: 1716623423448,
     bestseller: true,
+    type: "apparel",
   },
   {
     _id: "aaaag",
@@ -107,6 +114,7 @@ export const products: Product[] = [
     sizes: ["S", "L", "XL"],
     date: 1716621542448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaah",
@@ -120,6 +128,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716622345448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaai",
@@ -133,6 +142,7 @@ export const products: Product[] = [
     sizes: ["M", "L", "XL"],
     date: 1716621235448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaaj",
@@ -146,6 +156,7 @@ export const products: Product[] = [
     sizes: ["S", "L", "XL"],
     date: 1716622235448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaak",
@@ -159,6 +170,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L"],
     date: 1716623345448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaal",
@@ -172,6 +184,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716624445448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaam",
@@ -185,6 +198,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716625545448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaan",
@@ -198,6 +212,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716626645448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaao",
@@ -211,6 +226,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716627745448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaap",
@@ -224,6 +240,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716628845448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaaq",
@@ -237,6 +254,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716629945448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaar",
@@ -250,6 +268,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716631045448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaas",
@@ -263,6 +282,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716632145448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaat",
@@ -276,6 +296,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716633245448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaau",
@@ -289,6 +310,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716634345448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaav",
@@ -302,6 +324,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716635445448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaaw",
@@ -315,6 +338,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716636545448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaax",
@@ -328,6 +352,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716637645448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaay",
@@ -341,6 +366,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716638745448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaaz",
@@ -354,6 +380,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716639845448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaba",
@@ -367,6 +394,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716640945448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabb",
@@ -380,6 +408,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716642045448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabc",
@@ -393,6 +422,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716643145448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabd",
@@ -406,6 +436,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716644245448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabe",
@@ -419,6 +450,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716645345448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabf",
@@ -432,6 +464,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716646445448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabg",
@@ -445,6 +478,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716647545448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabh",
@@ -458,6 +492,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716648645448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabi",
@@ -471,6 +506,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716649745448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabj",
@@ -484,6 +520,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716650845448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabk",
@@ -497,6 +534,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716651945448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabl",
@@ -510,6 +548,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716653045448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabm",
@@ -523,6 +562,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716654145448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabn",
@@ -536,6 +576,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716655245448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabo",
@@ -549,6 +590,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716656345448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabp",
@@ -562,6 +604,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716657445448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabq",
@@ -575,6 +618,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716658545448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabr",
@@ -588,6 +632,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716659645448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabs",
@@ -601,6 +646,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716660745448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabt",
@@ -614,6 +660,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716661845448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabu",
@@ -627,6 +674,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716662945448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabv",
@@ -640,6 +688,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716664045448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabw",
@@ -653,6 +702,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716665145448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabx",
@@ -666,6 +716,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716666245448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaaby",
@@ -679,6 +730,7 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716667345448,
     bestseller: false,
+    type: "apparel",
   },
   {
     _id: "aaabz",
@@ -692,5 +744,6 @@ export const products: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     date: 1716668445448,
     bestseller: false,
+    type: "apparel",
   },
 ];
