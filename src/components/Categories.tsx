@@ -11,7 +11,7 @@ const Categories = () => {
     setApparels(items.slice(0, 6));
   }, []);
   return (
-    <div className=" flex flex-col sm:flex-row gap-4 w-full h-96 ">
+    <div className=" flex flex-col sm:flex-row gap-4 w-full ">
       <div
         style={{ backgroundImage: `url(${assets.apparel_bg})` }}
         className=" rounded flex-1 hover:scale-[102%] duration-200 bg-cover bg-center bg-no-repeat"

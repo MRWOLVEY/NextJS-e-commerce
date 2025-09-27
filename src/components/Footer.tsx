@@ -4,8 +4,8 @@ import { assets } from "@/data/assets";
 import Link from "next/link";
 const Footer = () => {
   return (
-    <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 text-sm p-10 bg-black text-white">
-      <div className="">
+    <div className="flex flex-1 flex-col sm:flex-row gap-1 text-sm p-10 bg-black text-white">
+      <div className="flex-3">
         <img src={assets.logo} alt="logo" className="mb-5 w-32 invert" />
         <p className="w-full md:w-2/3 text-gray-200">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi nam
@@ -14,7 +14,7 @@ const Footer = () => {
           porro? Provident, suscipit.
         </p>
       </div>
-      <div className="">
+      <div className="flex-1">
         <p className="text-xl font-medium mb-5">Company</p>
         <ul className="flex flex-col gap-1 text-gray-200">
           <Link href="/">Home</Link>
