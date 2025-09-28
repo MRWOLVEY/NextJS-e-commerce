@@ -3,12 +3,15 @@ import { useState, useEffect, use } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+import { useRouter } from "next/navigation";
+
 import React from "react";
 import Image from "next/image";
 import { assets } from "@/data/assets";
 import TextType from "./text-type/TextType";
 
 const Hero = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const timer: NodeJS.Timeout = setTimeout(() => {
@@ -36,7 +39,7 @@ const Hero = () => {
           <button
             className="flex items-center gap-2 cursor-pointer bg-amber-200 hover:bg-amber-100 transition-colors duration-100 p-2 rounded-2xl"
             onClick={() => {
-              console.log("Shop Now clicked!");
+              router.push("/category/apparel");
             }}
           >
             <p className="font-semibold text-sm md:text-2xl">SHOP NOW</p>

@@ -1,14 +1,13 @@
 "use client";
 import React, { useState, useContext, useEffect } from "react";
-// import { NavLink, Link, useLocation } from "react-router-dom";
 import { assets } from "@/data/assets";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import { ShopContext } from "../contexts/ShopContext";
+import { ShopContext } from "@/context/ShopContext";
 
 const Navbar = () => {
-  const [visible, setVisible] = useState(false);
-  //   const { state, setShowSearch } = useContext(ShopContext);
+  const [visible, setVisible] = useState<boolean>(false);
+  const { state, setShowSearch } = useContext(ShopContext);
   const pathname: string = usePathname();
 
   useEffect(() => {
@@ -23,11 +22,11 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-around py-5 font-medium border-b-2 mb-4">
+    <div className="flex items-center justify-around py-4 font-medium border-b-2 mb-2">
       <Link href={"/"}>
         <img src={assets.logo} className="w-36 cursor-pointer" alt="logo" />
       </Link>
-      <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
+      <ul className="hidden sm:flex gap-10 text-sm text-gray-700 pr-20">
         <Link href="/" className="flex flex-col items-center gap-1">
           <p>HOME</p>
           <hr className="w-0 border-none h-[1.5px] bg-gray-700" />
@@ -42,14 +41,14 @@ const Navbar = () => {
         </Link>
       </ul>
       <div className="flex items-center gap-6">
-        {pathname.includes("/collection") && (
+        {/* {pathname.includes("/category") && (
           <img
-            // onClick={() => setShowSearch(true)}
+            onClick={() => setShowSearch(true)}
             src={assets.search_icon}
             className="w-5 cursor-pointer"
             alt="search"
           />
-        )}
+        )} */}
         <div className="group relative">
           <img
             src={assets.profile_icon}

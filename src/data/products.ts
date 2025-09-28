@@ -12,6 +12,16 @@ export interface Product {
   bestseller: boolean;
 }
 
+export const categories: Record<string, string[]> = {
+  apparel: ["Men", "Women", "Kids"],
+  glasses: ["Sunglasses", "Eyeglasses"],
+};
+
+export const subcategories: Record<string, string[]> = {
+  apparel: ["Topwear", "Bottomwear", "Winterwear"],
+  glasses: ["Gucci", "Prada"],
+};
+
 export const products: Product[] = [
   {
     _id: "aaaaa",
