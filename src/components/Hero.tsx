@@ -34,7 +34,7 @@ const Hero = () => {
         </div>
         <div>
           <button
-            className="flex items-center gap-2 cursor-pointer bg-amber-100 p-2 rounded-2xl"
+            className="flex items-center gap-2 cursor-pointer bg-amber-200 hover:bg-amber-100 transition-colors duration-100 p-2 rounded-2xl"
             onClick={() => {
               console.log("Shop Now clicked!");
             }}
