@@ -43,3 +43,9 @@ html {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.checkout input::-webkit-outer-spin-button,
+.checkout input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

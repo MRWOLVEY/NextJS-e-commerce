@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [visible, setVisible] = useState<boolean>(false);
-  const { state, setShowSearch } = useContext(ShopContext);
+  const [showCats, setShowCats] = useState<boolean>(false);
+  const { state, setShowSearch, dispatch } = useContext(ShopContext);
   const pathname: string = usePathname();
   const router = useRouter();
 
@@ -19,9 +20,6 @@ const Navbar = () => {
       document.body.classList.remove("overflow-hidden");
     }
   }, [visible]);
-  useEffect(() => {
-    console.log(state);
-  }, [state.cart]);
 
   return (
     <div className="flex items-center justify-around py-4 font-medium border-b-2 mb-2">
@@ -77,26 +75,34 @@ const Navbar = () => {
             alt="search"
           />
         )} */}
-        <div className="group relative">
-          <img
-            src={assets.profile_icon}
-            alt="profile"
-            className="w-5 cursor-pointer"
-          />
-          <div className="group-hover:block hidden absolute dropdown-menu pt-4">
-            <div className="flex flex-col gap-2 w-36  py-3 px-5 bg-slate-100 text-gray-500 rounded">
-              <p
-                onClick={() => router.push("/wishlist")}
-                className="cursor-pointer hover:text-black"
-              >
-                Wishlist
-              </p>
-              <p onClick={() => {}} className="cursor-pointer hover:text-black">
-                Logout
-              </p>
+        {!visible && (
+          <div className="group hidden sm:block relative">
+            <img
+              src={assets.profile_icon}
+              alt="profile"
+              className="w-5 cursor-pointer"
+            />
+            <div className="group-hover:block hidden absolute dropdown-menu pt-4">
+              <div className="flex flex-col gap-2 w-36  py-3 px-5 bg-slate-100 text-gray-500 rounded">
+                <p
+                  onClick={() => router.push("/wishlist")}
+                  className="cursor-pointer hover:text-black"
+                >
+                  Wishlist
+                </p>
+                <p
+                  onClick={() => {
+                    dispatch({ type: "LOGOUT" });
+                    router.push("/login");
+                  }}
+                  className="cursor-pointer hover:text-black"
+                >
+                  Logout
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
         <Link href="/cart" className="relative">
           <img src={assets.cart_icon} className="w-5 min-w-5" alt="cart" />
           <span className="absolute -right-1 -bottom-1 w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
@@ -130,13 +136,36 @@ const Navbar = () => {
           >
             HOME
           </Link>
-          <Link
-            onClick={() => setVisible(false)}
-            href="/collection"
+          <div
+            onClick={() => {
+              setShowCats(() => !showCats);
+            }}
             className="py-2 pl-6 border"
           >
-            COLLECTION
-          </Link>
+            <span>COLLECTION</span>
+            {showCats && (
+              <div className="flex flex-col mt-2 gap-2 pl-4">
+                <Link
+                  onClick={() => setVisible(false)}
+                  href="/category/apparel"
+                  className="hover:text-black text-sm tracking-wider text-gray-500"
+                >
+                  Apparel
+                </Link>
+              </div>
+            )}{" "}
+            {showCats && (
+              <div className="flex flex-col mt-2 gap-2 pl-4">
+                <Link
+                  onClick={() => setVisible(false)}
+                  href="/category/glasses"
+                  className="hover:text-black text-sm tracking-wider text-gray-500"
+                >
+                  Glasses
+                </Link>
+              </div>
+            )}
+          </div>
           <Link
             onClick={() => setVisible(false)}
             href="/about"
@@ -151,6 +180,23 @@ const Navbar = () => {
           >
             CONTACT
           </Link>
+          <Link
+            onClick={() => setVisible(false)}
+            href="/wishlist"
+            className="py-2 pl-6 border"
+          >
+            WISHLIST
+          </Link>
+          <div
+            onClick={() => {
+              setVisible(false);
+              dispatch({ type: "LOGOUT" });
+              router.push("/login");
+            }}
+            className="py-2 pl-6 border"
+          >
+            LOGOUT
+          </div>
         </div>
       </div>
     </div>

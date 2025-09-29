@@ -63,7 +63,9 @@ const Cart = () => {
       <div className="text-2xl mb-3">
         <Title t1={"your"} t2={"cart"} />
         {state.cartProductsCount == 0 ? (
-          <p className="text-gray-500">Your cart is empty</p>
+          <div className="w-full min-h-16.5 flex justify-center items-center">
+            <p className="text-gray-500">Your cart is empty</p>
+          </div>
         ) : null}
         {cartData.map((item, index) => {
           // console.log('item', item)
@@ -125,15 +127,19 @@ const Cart = () => {
       </div>
       <div className="flex justify-end my-20">
         <div className="w-full sm:w-[450px]">
-          <CartTotal />
-          <div className="w-full text-end">
-            <button
-              onClick={() => router.push("/place-order")}
-              className="bg-black hover:opacity-85 text-white text-xs my-5 px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-200 uppercase transition-all duration-100"
-            >
-              proceed to checkout
-            </button>
-          </div>
+          {state.cartProductsCount > 0 && (
+            <>
+              <CartTotal />
+              <div className="w-full text-end">
+                <button
+                  onClick={() => router.push("/checkout")}
+                  className="bg-black hover:opacity-85 text-white text-xs my-5 px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-200 uppercase transition-all duration-100"
+                >
+                  proceed to checkout
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
 import { createContext, useState, useReducer } from "react";
 import reducer from "@/context/Reducer";
 import { State, Action, values } from "@/data/types";
+import { register } from "module";
 
 export const ShopContext = createContext({} as values);
 
@@ -13,6 +14,8 @@ const ShopContextProvider = ({ children }: { children: React.ReactNode }) => {
     wishlistProductsCount: 0,
     wishlist: {},
     total: 0,
+    isLoggedIn: false,
+    user: null,
   };
   const actions = {
     addToCart: "ADD_TO_CART",
@@ -23,6 +26,9 @@ const ShopContextProvider = ({ children }: { children: React.ReactNode }) => {
     clearCart: "CLEAR_CART",
     clearWishlist: "CLEAR_WISHLIST",
     updateTotal: "UPDATE_TOTAL",
+    register: "REGISTER",
+    login: "LOGIN",
+    logout: "LOGOUT",
   };
 
   // Define types for state and action

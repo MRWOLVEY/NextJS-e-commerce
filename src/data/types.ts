@@ -26,6 +26,9 @@ export interface values {
     updateTotal: string;
     removeFromWishlist: string;
     clearWishlist: string;
+    register: string;
+    login: string;
+    logout: string;
   };
 }
 

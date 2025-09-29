@@ -96,6 +96,27 @@ export default function reducer(state: any, action: any) {
         wishlist: {},
         wishlistProductsCount: 0,
       };
+    case "REGISTER":
+      console.log("User registration:", action.payload);
+      return {
+        ...state,
+        isLoggedIn: true,
+        user: action.payload,
+      };
+    case "LOGIN":
+      console.log("User login:", action.payload);
+      return {
+        ...state,
+        isLoggedIn: true,
+        user: action.payload,
+      };
+    case "LOGOUT":
+      console.log("User logout");
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+      };
     default:
       return state;
   }
