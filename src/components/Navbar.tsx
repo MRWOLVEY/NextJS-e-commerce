@@ -4,11 +4,13 @@ import { assets } from "@/data/assets";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShopContext } from "@/context/ShopContext";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const { state, setShowSearch } = useContext(ShopContext);
   const pathname: string = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     if (visible) {
@@ -18,24 +20,50 @@ const Navbar = () => {
     }
   }, [visible]);
   useEffect(() => {
-    console.log(pathname);
-  }, []);
+    console.log(state);
+  }, [state.cart]);
 
   return (
     <div className="flex items-center justify-around py-4 font-medium border-b-2 mb-2">
       <Link href={"/"}>
         <img src={assets.logo} className="w-36 cursor-pointer" alt="logo" />
       </Link>
-      <ul className="hidden sm:flex gap-10 text-sm text-gray-700 pr-20">
-        <Link href="/" className="flex flex-col items-center gap-1">
+      <ul className="hidden sm:flex gap-10 text-sm text-gray-700">
+        <Link
+          href="/"
+          className="underlinedLink flex flex-col items-center gap-1"
+        >
           <p>HOME</p>
           <hr className="w-0 border-none h-[1.5px] bg-gray-700" />
         </Link>
-        <Link href="/about" className="flex flex-col items-center gap-1">
+        <div className="flex flex-col items-center gap-1 group relative">
+          <p className="">COLLECTION</p>
+          <div className="hidden group-hover:flex absolute top-full left-0 bg-white shadow-lg flex-col p-4 gap-2 rounded w-full items-center">
+            <Link
+              href="/category/apparel"
+              className="hover:text-black text-sm tracking-wider text-gray-500"
+            >
+              APPARELS
+            </Link>
+            <Link
+              href="/category/glasses"
+              className="hover:text-black text-sm tracking-wider text-gray-500"
+            >
+              GLASSES
+            </Link>
+          </div>
+        </div>
+        <Link
+          href="/about"
+          className="underlinedLink flex flex-col items-center gap-1"
+        >
           <p>ABOUT</p>
           <hr className="w-0 border-none h-[1.5px] bg-gray-700" />
         </Link>
-        <Link href="/contact" className="flex flex-col items-center gap-1">
+        <Link
+          href="/contact"
+          className="underlinedLink flex flex-col items-center gap-1"
+        >
           <p>CONTACT </p>
           <hr className="w-0 border-none h-[1.5px] bg-gray-700" />
         </Link>
@@ -55,19 +83,25 @@ const Navbar = () => {
             alt="profile"
             className="w-5 cursor-pointer"
           />
-          <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
+          <div className="group-hover:block hidden absolute dropdown-menu pt-4">
             <div className="flex flex-col gap-2 w-36  py-3 px-5 bg-slate-100 text-gray-500 rounded">
-              <p className="cursor-pointer hover:text-black">My Profile</p>
-              <p className="cursor-pointer hover:text-black">Orders</p>
-              <p className="cursor-pointer hover:text-black">Logout</p>
+              <p
+                onClick={() => router.push("/wishlist")}
+                className="cursor-pointer hover:text-black"
+              >
+                Wishlist
+              </p>
+              <p onClick={() => {}} className="cursor-pointer hover:text-black">
+                Logout
+              </p>
             </div>
           </div>
         </div>
         <Link href="/cart" className="relative">
           <img src={assets.cart_icon} className="w-5 min-w-5" alt="cart" />
-          {/* <p className="absolute -right-1 -bottom-1 w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+          <span className="absolute -right-1 -bottom-1 w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             {state.cartProductsCount}
-          </p> */}
+          </span>
         </Link>
         <img
           src={assets.menu_icon}

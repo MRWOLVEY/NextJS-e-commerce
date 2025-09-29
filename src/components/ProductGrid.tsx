@@ -2,6 +2,9 @@
 import React, { useMemo, useState } from "react";
 import ProductItem from "@/components/ProductItem";
 import Title from "@/components/Title";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import CardSkeleton from "./CardSkeleton";
 
 interface Product {
   name: string;
@@ -41,6 +44,7 @@ const ProductGrid = ({
     { length: Math.ceil(filteredProducts.length / productsPerPage) },
     (_, i) => i + 1
   );
+  const skeletonCards = Array.from({ length: 8 }, (_, i) => i + 1);
 
   return (
     <div className="flex-1">
@@ -65,11 +69,13 @@ const ProductGrid = ({
         {filteredProductsPaginated.map((product, index) => (
           <ProductItem key={index} {...product} />
         ))}
-        {filteredProducts.length === 0 && (
-          <div className="col-span-2 md:col-span-3 lg:col-span-4 text-center text-gray-500 text-lg">
-            no products found
-          </div>
-        )}
+        {filteredProducts.length === 0 &&
+          skeletonCards.map((card) => (
+            // <div className="col-span-2 md:col-span-3 lg:col-span-4 text-center text-gray-500 text-lg">
+            //   no products found
+            // </div>
+            <CardSkeleton key={card} />
+          ))}
       </div>
       {/* pagination */}
       <div className="flex justify-center mt-6 gap-3 flex-wrap">

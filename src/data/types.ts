@@ -18,10 +18,24 @@ export interface values {
   state: State;
   dispatch: React.Dispatch<Action>;
   actions: {
+    addToWishlist: string;
     addToCart: string;
     removeFromCart: string;
     updateQuantity: string;
     clearCart: string;
     updateTotal: string;
+    removeFromWishlist: string;
+    clearWishlist: string;
   };
+}
+
+export interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  type: string;
+  category: string;
+  subCategory: string;
+  image: string[];
+  [key: string]: any;
 }

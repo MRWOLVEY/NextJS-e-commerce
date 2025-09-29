@@ -10,13 +10,18 @@ const ShopContextProvider = ({ children }: { children: React.ReactNode }) => {
   const initialState = {
     cartProductsCount: 0,
     cart: {},
+    wishlistProductsCount: 0,
+    wishlist: {},
     total: 0,
   };
   const actions = {
     addToCart: "ADD_TO_CART",
+    addToWishlist: "ADD_TO_WISHLIST",
     removeFromCart: "REMOVE_FROM_CART",
+    removeFromWishlist: "REMOVE_FROM_WISHLIST",
     updateQuantity: "UPDATE_QUANTITY",
     clearCart: "CLEAR_CART",
+    clearWishlist: "CLEAR_WISHLIST",
     updateTotal: "UPDATE_TOTAL",
   };
 
