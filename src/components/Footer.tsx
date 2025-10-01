@@ -4,7 +4,7 @@ import { assets } from "@/data/assets";
 import Link from "next/link";
 const Footer = () => {
   return (
-    <div className="flex flex-1 flex-col sm:flex-row gap-1 text-sm p-10 bg-black text-white">
+    <div className="h-fit flex flex-col sm:flex-row gap-1 text-sm p-10 bg-black text-white">
       <div className="flex-3">
         <img src={assets.logo} alt="logo" className="mb-5 w-32 invert" />
         <p className="w-full md:w-2/3 text-gray-200">

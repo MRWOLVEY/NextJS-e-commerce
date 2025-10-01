@@ -19,11 +19,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ShopContextProvider>
-          <Navbar />
-          <div className="py-4 px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-            {children}
+          <div className="h-screen flex flex-col justify-between">
+            <Navbar />
+            <div className="py-4 px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+              {children}
+            </div>
+            <Footer />
           </div>
-          <Footer />
         </ShopContextProvider>
       </body>
     </html>
