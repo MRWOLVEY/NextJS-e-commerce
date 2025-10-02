@@ -3,6 +3,7 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useTranslations } from "next-intl";
 import Title from "@/components/Title";
 
 // Zod validation schema
@@ -34,6 +35,8 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 const ContactPage = () => {
+  const t = useTranslations("Contact");
+
   const {
     register,
     handleSubmit,
@@ -64,10 +67,9 @@ const ContactPage = () => {
       <div className="max-w-4xl mx-auto">
         {/* Page Title */}
         <div className="text-center mb-12 text-2xl">
-          <Title t1="CONTACT" t2="US" />
+          <Title t1={t("contact_us")} t2={t("us")} />
           <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            We'd love to hear from you. Send us a message and we'll respond as
-            soon as possible.
+            {t("page_description")}
           </p>
         </div>
 
@@ -75,34 +77,36 @@ const ContactPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Contact Information */}
             <div className="bg-gray-900 text-white p-8 lg:p-12">
-              <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
+              <h3 className="text-2xl font-bold mb-6">{t("get_in_touch")}</h3>
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-lg font-semibold mb-2">Address</h4>
+                  <h4 className="text-lg font-semibold mb-2">{t("address")}</h4>
                   <p className="text-gray-300">
-                    123 Business Street
+                    {t("address_line1")}
                     <br />
-                    City, State 12345
+                    {t("address_line2")}
                     <br />
-                    Country
+                    {t("address_line3")}
                   </p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold mb-2">Phone</h4>
-                  <p className="text-gray-300">+1 (555) 123-4567</p>
+                  <h4 className="text-lg font-semibold mb-2">{t("phone")}</h4>
+                  <p className="text-gray-300">{t("phone_number")}</p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold mb-2">Email</h4>
-                  <p className="text-gray-300">contact@company.com</p>
+                  <h4 className="text-lg font-semibold mb-2">{t("email")}</h4>
+                  <p className="text-gray-300">{t("email_address")}</p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold mb-2">Business Hours</h4>
+                  <h4 className="text-lg font-semibold mb-2">
+                    {t("business_hours")}
+                  </h4>
                   <p className="text-gray-300">
-                    Monday - Friday: 9:00 AM - 6:00 PM
+                    {t("hours_weekday")}
                     <br />
-                    Saturday: 10:00 AM - 4:00 PM
+                    {t("hours_saturday")}
                     <br />
-                    Sunday: Closed
+                    {t("hours_sunday")}
                   </p>
                 </div>
               </div>
@@ -111,7 +115,7 @@ const ContactPage = () => {
             {/* Contact Form */}
             <div className="p-8 lg:p-12">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Send us a Message
+                {t("send_message")}
               </h3>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -121,12 +125,12 @@ const ContactPage = () => {
                     htmlFor="name"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Full Name *
+                    {t("full_name_required")}
                   </label>
                   <input
                     id="name"
                     type="text"
-                    placeholder="Enter your full name"
+                    placeholder={t("enter_full_name")}
                     {...register("name")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                   />
@@ -143,12 +147,12 @@ const ContactPage = () => {
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Email Address *
+                    {t("email_required")}
                   </label>
                   <input
                     id="email"
                     type="email"
-                    placeholder="Enter your email address"
+                    placeholder={t("enter_email_address")}
                     {...register("email")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                   />
@@ -165,12 +169,12 @@ const ContactPage = () => {
                     htmlFor="phone"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Phone Number (Optional)
+                    {t("phone_optional")}
                   </label>
                   <input
                     id="phone"
                     type="tel"
-                    placeholder="Enter your phone number"
+                    placeholder={t("enter_phone")}
                     {...register("phone")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                   />
@@ -187,12 +191,12 @@ const ContactPage = () => {
                     htmlFor="subject"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Subject *
+                    {t("subject_required")}
                   </label>
                   <input
                     id="subject"
                     type="text"
-                    placeholder="Enter message subject"
+                    placeholder={t("enter_subject")}
                     {...register("subject")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                   />
@@ -209,12 +213,12 @@ const ContactPage = () => {
                     htmlFor="message"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Message *
+                    {t("message_required")}
                   </label>
                   <textarea
                     id="message"
                     rows={6}
-                    placeholder="Enter your message"
+                    placeholder={t("enter_message")}
                     {...register("message")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 resize-vertical"
                   />
@@ -254,10 +258,10 @@ const ContactPage = () => {
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                           ></path>
                         </svg>
-                        Sending Message...
+                        {t("sending_message")}
                       </span>
                     ) : (
-                      "Send Message"
+                      t("send_message_button")
                     )}
                   </button>
                 </div>

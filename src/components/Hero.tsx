@@ -9,16 +9,17 @@ import React from "react";
 import Image from "next/image";
 import { assets } from "@/data/assets";
 import TextType from "./text-type/TextType";
+import { fa } from "zod/locales";
 
 const Hero = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(true);
-  useEffect(() => {
-    const timer: NodeJS.Timeout = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  });
+  const [loading, setLoading] = useState<boolean>(false);
+  // useEffect(() => {
+  //   const timer: NodeJS.Timeout = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000);
+  //   return () => clearTimeout(timer);
+  // });
   return (
     <div
       className={`flex flex-col-reverse sm:flex-row border border-gray-400 `}
@@ -50,13 +51,11 @@ const Hero = () => {
       {/* RIGHT SIDE */}
       <div className="w-full sm:w-1/2">
         {loading && (
-          // <div className="h-full w-full flex flex-1 justify-end items-center">
           <Skeleton
             width={200}
             height={200}
             containerClassName="flex flex-1 h-[26rem] justify-center items-center"
           />
-          // </div>
         )}
         {!loading && (
           <Image

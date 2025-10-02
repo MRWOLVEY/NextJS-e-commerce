@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useTranslations } from "next-intl";
 import { ShopContext } from "@/context/ShopContext";
 
 // Zod validation schema
@@ -25,6 +26,7 @@ type RegistrationFormData = z.infer<typeof registrationSchema>;
 
 const SignupPage = () => {
   const { dispatch, actions } = useContext(ShopContext);
+  const t = useTranslations("Auth");
 
   const {
     register,
@@ -52,9 +54,11 @@ const SignupPage = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="bg-white shadow-lg rounded-lg border border-gray-200 p-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
+            <h2 className="text-3xl font-bold text-gray-900">
+              {t("create_account")}
+            </h2>
             <p className="mt-2 text-sm text-gray-600">
-              Please fill in your information to register
+              {t("create_account_description")}
             </p>
           </div>
 
@@ -65,12 +69,12 @@ const SignupPage = () => {
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Full Name
+                {t("full_name")}
               </label>
               <input
                 id="name"
                 type="text"
-                placeholder="Enter your full name"
+                placeholder={t("enter_name")}
                 {...register("name")}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
               />
@@ -87,12 +91,12 @@ const SignupPage = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Email Address
+                {t("email_address")}
               </label>
               <input
                 id="email"
                 type="email"
-                placeholder="Enter your email address"
+                placeholder={t("enter_email")}
                 {...register("email")}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
               />
@@ -109,12 +113,12 @@ const SignupPage = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Password
+                {t("password")}
               </label>
               <input
                 id="password"
                 type="password"
-                placeholder="Create a strong password"
+                placeholder={t("create_strong_password")}
                 {...register("password")}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
               />
@@ -154,10 +158,10 @@ const SignupPage = () => {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Registering...
+                    {t("registering")}
                   </span>
                 ) : (
-                  "Register"
+                  t("register")
                 )}
               </button>
             </div>
@@ -172,12 +176,12 @@ const SignupPage = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Already have an account?{" "}
+              {t("already_have_account")}{" "}
               <a
                 href="/login"
                 className="font-medium text-black hover:text-gray-500"
               >
-                Sign in
+                {t("sign_in_link")}
               </a>
             </p>
           </div>

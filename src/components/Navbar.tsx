@@ -5,13 +5,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShopContext } from "@/context/ShopContext";
 import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+
+const setLocaleCookie = (locale: string) => {
+  const expires = new Date();
+  expires.setTime(expires.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 year
+  document.cookie = `locale=${locale}; path=/; expires=${expires.toUTCString()}`;
+};
 
 const Navbar = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [showCats, setShowCats] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
   const { state, setShowSearch, dispatch } = useContext(ShopContext);
   const pathname: string = usePathname();
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("Navigation");
+  const authT = useTranslations("Auth");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (visible) {
@@ -31,23 +46,23 @@ const Navbar = () => {
           href="/"
           className="underlinedLink flex flex-col items-center gap-1"
         >
-          <p>HOME</p>
+          <p>{t("home")}</p>
           <hr className="w-0 border-none h-[1.5px] bg-gray-700" />
         </Link>
         <div className="flex flex-col items-center gap-1 group relative">
-          <p className="">COLLECTION</p>
+          <p className="">{t("collection")}</p>
           <div className="hidden group-hover:flex absolute top-full left-0 bg-white shadow-lg flex-col p-4 gap-2 rounded w-full items-center">
             <Link
               href="/category/apparel"
               className="hover:text-black text-sm tracking-wider text-gray-500"
             >
-              APPARELS
+              {t("apparels")}
             </Link>
             <Link
               href="/category/glasses"
               className="hover:text-black text-sm tracking-wider text-gray-500"
             >
-              GLASSES
+              {t("glasses")}
             </Link>
           </div>
         </div>
@@ -55,14 +70,14 @@ const Navbar = () => {
           href="/about"
           className="underlinedLink flex flex-col items-center gap-1"
         >
-          <p>ABOUT</p>
+          <p>{t("about")}</p>
           <hr className="w-0 border-none h-[1.5px] bg-gray-700" />
         </Link>
         <Link
           href="/contact"
           className="underlinedLink flex flex-col items-center gap-1"
         >
-          <p>CONTACT </p>
+          <p>{t("contact")}</p>
           <hr className="w-0 border-none h-[1.5px] bg-gray-700" />
         </Link>
       </ul>
@@ -75,15 +90,47 @@ const Navbar = () => {
             alt="search"
           />
         )} */}
-        {!visible && !state.isLoggedIn && (
+        <div className="border flex gap-0.5 p-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-4 h-4 cursor-pointer"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="m6.93 6.93 4.24 4.24" />
+            <path d="m14.83 9.17 4.24-4.24" />
+            <path d="m14.83 14.83 4.24 4.24" />
+            <path d="m6.93 17.07 4.24-4.24" />
+          </svg>
+          <div className="h-4 border-l" />
+          <select
+            value={locale}
+            onChange={(e) => {
+              const selectedLocale = e.target.value;
+              setLocaleCookie(selectedLocale);
+              router.refresh(); // Refresh to apply the new locale
+            }}
+            className="outline-none bg-transparent text-sm cursor-pointer"
+          >
+            <option value="en">EN</option>
+            <option value="ar">AR</option>
+          </select>
+        </div>
+        {mounted && !visible && !state.isLoggedIn && (
           <button
             className="bg-black hover:bg-gray-700 text-white px-4 py-2 rounded text-sm cursor-pointer hidden sm:block"
             onClick={() => router.push("/login")}
           >
-            Login
+            {authT("login")}
           </button>
         )}
-        {!visible && state.isLoggedIn && (
+        {mounted && !visible && state.isLoggedIn && (
           <div className="group hidden sm:block relative">
             <img
               src={assets.profile_icon}
@@ -96,7 +143,7 @@ const Navbar = () => {
                   onClick={() => router.push("/wishlist")}
                   className="cursor-pointer hover:text-black"
                 >
-                  Wishlist
+                  {t("wishlist")}
                 </p>
                 <p
                   onClick={() => {
@@ -105,7 +152,7 @@ const Navbar = () => {
                   }}
                   className="cursor-pointer hover:text-black"
                 >
-                  Logout
+                  {t("logout")}
                 </p>
               </div>
             </div>
@@ -135,14 +182,14 @@ const Navbar = () => {
             onClick={() => setVisible(false)}
           >
             <img src={assets.dropdown_icon} className="h-4 rotate-180" />
-            <p className="text-slate-100">Back</p>
+            <p className="text-slate-100">{t("back")}</p>
           </div>
           <Link
             onClick={() => setVisible(false)}
             href="/"
             className="py-2 pl-6 border"
           >
-            HOME
+            {t("home")}
           </Link>
           <div
             onClick={() => {
@@ -150,7 +197,7 @@ const Navbar = () => {
             }}
             className="py-2 pl-6 border"
           >
-            <span>COLLECTION</span>
+            <span>{t("collection")}</span>
             {showCats && (
               <div className="flex flex-col mt-2 gap-2 pl-4">
                 <Link
@@ -158,7 +205,7 @@ const Navbar = () => {
                   href="/category/apparel"
                   className="hover:text-black text-sm tracking-wider text-gray-500"
                 >
-                  Apparel
+                  {t("apparel")}
                 </Link>
               </div>
             )}
@@ -169,7 +216,7 @@ const Navbar = () => {
                   href="/category/glasses"
                   className="hover:text-black text-sm tracking-wider text-gray-500"
                 >
-                  Glasses
+                  {t("glasses_lowercase")}
                 </Link>
               </div>
             )}
@@ -179,16 +226,16 @@ const Navbar = () => {
             href="/about"
             className="py-2 pl-6 border"
           >
-            ABOUT
+            {t("about")}
           </Link>
           <Link
             onClick={() => setVisible(false)}
             href="/contact"
             className="py-2 pl-6 border"
           >
-            CONTACT
+            {t("contact")}
           </Link>
-          {state.isLoggedIn ? (
+          {mounted && state.isLoggedIn ? (
             <div className="">
               <div
                 onClick={() => {
@@ -197,7 +244,7 @@ const Navbar = () => {
                 }}
                 className="py-2 pl-6 border "
               >
-                WISHLIST
+                {t("wishlist").toUpperCase()}
               </div>
               <div
                 onClick={() => {
@@ -207,18 +254,18 @@ const Navbar = () => {
                 }}
                 className="py-2 pl-6 border"
               >
-                LOGOUT
+                {t("logout").toUpperCase()}
               </div>
             </div>
-          ) : (
+          ) : mounted ? (
             <Link
               onClick={() => setVisible(false)}
               href="/login"
               className="py-2 pl-6 border"
             >
-              LOGIN
+              {authT("login").toUpperCase()}
             </Link>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { ShopContext } from "@/context/ShopContext";
 
 // Zod validation schema
@@ -20,6 +21,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 const LoginPage = () => {
   const { dispatch, actions } = useContext(ShopContext);
   const router = useRouter();
+  const t = useTranslations("Auth");
 
   const {
     register,
@@ -47,9 +49,9 @@ const LoginPage = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="bg-white shadow-lg rounded-lg border border-gray-200 p-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Sign In</h2>
+            <h2 className="text-3xl font-bold text-gray-900">{t("sign_in")}</h2>
             <p className="mt-2 text-sm text-gray-600">
-              Please sign in to your account
+              {t("sign_in_description")}
             </p>
           </div>
 
@@ -60,12 +62,12 @@ const LoginPage = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Email Address
+                {t("email_address")}
               </label>
               <input
                 id="email"
                 type="email"
-                placeholder="Enter your email address"
+                placeholder={t("enter_email")}
                 {...register("email")}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
               />
@@ -82,12 +84,12 @@ const LoginPage = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Password
+                {t("password")}
               </label>
               <input
                 id="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder={t("enter_password")}
                 {...register("password")}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
               />
@@ -127,10 +129,10 @@ const LoginPage = () => {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Signing In...
+                    {t("signing_in")}
                   </span>
                 ) : (
-                  "Sign In"
+                  t("sign_in")
                 )}
               </button>
             </div>
@@ -145,12 +147,12 @@ const LoginPage = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
+              {t("dont_have_account")}{" "}
               <a
                 href="/signup"
                 className="font-medium text-black hover:text-gray-500"
               >
-                Create account
+                {t("create_account_link")}
               </a>
             </p>
           </div>

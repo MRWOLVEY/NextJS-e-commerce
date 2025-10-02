@@ -1,3 +1,4 @@
+import { NextIntlClientProvider } from "next-intl";
 import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/Footer";
@@ -19,13 +20,15 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ShopContextProvider>
-          <div className="h-screen flex flex-col justify-between">
-            <Navbar />
-            <div className="py-4 px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-              {children}
+          <NextIntlClientProvider>
+            <div className="h-screen flex flex-col justify-between">
+              <Navbar />
+              <div className="py-4 px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+                {children}
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
+          </NextIntlClientProvider>
         </ShopContextProvider>
       </body>
     </html>
