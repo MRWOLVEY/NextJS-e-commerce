@@ -31,6 +31,38 @@
     "convenience": "Convenience",
     "exceptional_service": "Exceptional Service"
   },
+  "SEO": {
+    "home": {
+      "title": "Premium Fashion Store - Best Quality Apparel & Glasses",
+      "description": "Discover the finest collection of premium apparel and designer glasses. Quality guaranteed, easy returns, and 24/7 customer support.",
+      "keywords": "fashion, apparel, glasses, premium quality, online shopping, designer wear"
+    },
+    "about": {
+      "title": "About Us - Your Trusted Fashion Partner",
+      "description": "Learn about our mission to provide premium quality fashion with exceptional service. Quality assurance and customer satisfaction guaranteed.",
+      "keywords": "about us, fashion company, quality assurance, customer service"
+    },
+    "contact": {
+      "title": "Contact Us - Get in Touch",
+      "description": "Contact our friendly customer service team. We're here to help with any questions about our premium fashion collection.",
+      "keywords": "contact, customer service, support, help, fashion inquiries"
+    },
+    "cart": {
+      "title": "Shopping Cart - Review Your Items",
+      "description": "Review and manage your selected fashion items. Secure checkout with multiple payment options available.",
+      "keywords": "shopping cart, checkout, secure payment, fashion items"
+    },
+    "checkout": {
+      "title": "Secure Checkout - Complete Your Order",
+      "description": "Complete your fashion purchase with our secure checkout process. Fast delivery and hassle-free returns.",
+      "keywords": "checkout, secure payment, fast delivery, order completion"
+    },
+    "products": {
+      "title": "Premium Fashion Collection - Apparel & Glasses",
+      "description": "Browse our extensive collection of premium apparel and designer glasses. Find your perfect style with quality guaranteed.",
+      "keywords": "fashion collection, apparel, glasses, premium products, designer wear"
+    }
+  },
   "Navigation": {
     "home": "HOME",
     "collection": "COLLECTION",

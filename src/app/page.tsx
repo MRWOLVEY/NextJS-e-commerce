@@ -3,6 +3,24 @@ import Categories from "@/components/Categories";
 import BestSellers from "@/components/BestSellers";
 import OurPolicy from "@/components/Policy";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { cookies } from "next/headers";
+import { generateMetadata as generateSEOMetadata } from "@/utils/seo";
+
+export async function generateMetadata() {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("locale")?.value || "en";
+  const t = await getTranslations({ locale, namespace: "SEO" });
+
+  return generateSEOMetadata(
+    {
+      title: t("home.title"),
+      description: t("home.description"),
+      keywords: t("home.keywords"),
+    },
+    locale
+  );
+}
 
 export default function Page() {
   const t = useTranslations("HomePage");

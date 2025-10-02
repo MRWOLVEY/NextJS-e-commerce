@@ -1,11 +1,29 @@
-"use client";
-import React, { useContext } from "react";
+import React from "react";
 import Title from "@/components/Title";
 import { assets } from "@/data/assets";
-import { ShopContext } from "@/context/ShopContext";
-import { useTranslations } from "next-intl";
-const About = () => {
-  const t = useTranslations("About");
+import { getTranslations } from "next-intl/server";
+import { cookies } from "next/headers";
+import { generateMetadata as generateSEOMetadata } from "@/utils/seo";
+
+export async function generateMetadata() {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("locale")?.value || "en";
+  const t = await getTranslations({ locale, namespace: "SEO" });
+
+  return generateSEOMetadata(
+    {
+      title: t("about.title"),
+      description: t("about.description"),
+      keywords: t("about.keywords"),
+    },
+    locale
+  );
+}
+
+const About = async () => {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("locale")?.value || "en";
+  const t = await getTranslations({ locale, namespace: "About" });
 
   return (
     <div className="bg-gray-50">

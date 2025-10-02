@@ -1,0 +1,28 @@
+import { MetadataRoute } from "next";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  // Simple sitemap for learning project
+  const baseUrl = "http://localhost:3000";
+  const lastModified = new Date();
+
+  const staticPages = [
+    "",
+    "/about",
+    "/contact",
+    "/category/apparel",
+    "/category/glasses",
+  ];
+
+  const urls: MetadataRoute.Sitemap = [];
+
+  staticPages.forEach((page) => {
+    urls.push({
+      url: `${baseUrl}${page}`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: page === "" ? 1 : 0.8,
+    });
+  });
+
+  return urls;
+}
