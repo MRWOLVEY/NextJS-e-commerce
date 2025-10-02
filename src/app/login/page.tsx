@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 import { ShopContext } from "@/context/ShopContext";
 
 // Zod validation schema
@@ -18,6 +19,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
   const { dispatch, actions } = useContext(ShopContext);
+  const router = useRouter();
 
   const {
     register,
@@ -28,9 +30,6 @@ const LoginPage = () => {
   });
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
-    console.log("Login data:", data);
-
-    // Dispatch login action
     dispatch({
       type: actions.login,
       payload: data,
@@ -38,6 +37,9 @@ const LoginPage = () => {
 
     // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Redirect to home
+    router.push("/");
   };
 
   return (

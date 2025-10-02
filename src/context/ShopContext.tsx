@@ -3,6 +3,7 @@ import { createContext, useState, useReducer } from "react";
 import reducer from "@/context/Reducer";
 import { State, Action, values } from "@/data/types";
 import { register } from "module";
+import { set } from "zod";
 
 export const ShopContext = createContext({} as values);
 
@@ -27,6 +28,7 @@ const ShopContextProvider = ({ children }: { children: React.ReactNode }) => {
     clearWishlist: "CLEAR_WISHLIST",
     updateTotal: "UPDATE_TOTAL",
     register: "REGISTER",
+    setAuth: "SET_AUTH",
     login: "LOGIN",
     logout: "LOGOUT",
   };

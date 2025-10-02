@@ -75,7 +75,15 @@ const Navbar = () => {
             alt="search"
           />
         )} */}
-        {!visible && (
+        {!visible && !state.isLoggedIn && (
+          <button
+            className="bg-black hover:bg-gray-700 text-white px-4 py-2 rounded text-sm cursor-pointer hidden sm:block"
+            onClick={() => router.push("/login")}
+          >
+            Login
+          </button>
+        )}
+        {!visible && state.isLoggedIn && (
           <div className="group hidden sm:block relative">
             <img
               src={assets.profile_icon}
@@ -153,7 +161,7 @@ const Navbar = () => {
                   Apparel
                 </Link>
               </div>
-            )}{" "}
+            )}
             {showCats && (
               <div className="flex flex-col mt-2 gap-2 pl-4">
                 <Link
@@ -180,23 +188,37 @@ const Navbar = () => {
           >
             CONTACT
           </Link>
-          <Link
-            onClick={() => setVisible(false)}
-            href="/wishlist"
-            className="py-2 pl-6 border"
-          >
-            WISHLIST
-          </Link>
-          <div
-            onClick={() => {
-              setVisible(false);
-              dispatch({ type: "LOGOUT" });
-              router.push("/login");
-            }}
-            className="py-2 pl-6 border"
-          >
-            LOGOUT
-          </div>
+          {state.isLoggedIn ? (
+            <div className="">
+              <div
+                onClick={() => {
+                  setVisible(false);
+                  router.push("/wishlist");
+                }}
+                className="py-2 pl-6 border "
+              >
+                WISHLIST
+              </div>
+              <div
+                onClick={() => {
+                  setVisible(false);
+                  dispatch({ type: "LOGOUT" });
+                  router.push("/login");
+                }}
+                className="py-2 pl-6 border"
+              >
+                LOGOUT
+              </div>
+            </div>
+          ) : (
+            <Link
+              onClick={() => setVisible(false)}
+              href="/login"
+              className="py-2 pl-6 border"
+            >
+              LOGIN
+            </Link>
+          )}
         </div>
       </div>
     </div>

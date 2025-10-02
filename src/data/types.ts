@@ -1,6 +1,7 @@
 export type url = string;
 
 export interface State {
+  isLoggedIn: boolean;
   cartProductsCount: number;
   // cart: { [key: string]: number };
   cart: { [key: string]: number | string };

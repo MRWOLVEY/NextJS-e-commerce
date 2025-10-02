@@ -13,6 +13,13 @@ const calculateCount = (cart: Cart) => {
   return quantity;
 };
 
+const updateToken = () => {
+  const cookies = document.cookie.split(";");
+  const tokenExists = cookies.some(
+    (cookie) => cookie.trim().startsWith("token=") && cookie.trim() !== "token="
+  );
+};
+
 export default function reducer(state: any, action: any) {
   let updatedCart = {} as Cart;
   switch (action.type) {
@@ -100,22 +107,27 @@ export default function reducer(state: any, action: any) {
       console.log("User registration:", action.payload);
       return {
         ...state,
-        isLoggedIn: true,
-        user: action.payload,
       };
+
+    case "SET_AUTH":
+      return {
+        ...state,
+        isLoggedIn: action.payload,
+      };
+
     case "LOGIN":
-      console.log("User login:", action.payload);
+      document.cookie = "token=loggedin; path=/; max-age=86400";
       return {
         ...state,
         isLoggedIn: true,
-        user: action.payload,
       };
     case "LOGOUT":
-      console.log("User logout");
+      document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       return {
         ...state,
         isLoggedIn: false,
-        user: null,
+        wishlist: {},
+        wishlistProductsCount: 0,
       };
     default:
       return state;
