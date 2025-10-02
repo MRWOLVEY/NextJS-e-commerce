@@ -1,7 +1,35 @@
 {
   "HomePage": {
     "title": "مرحباً بك في متجرنا",
-    "description": "اعثر على أفضل المنتجات هنا."
+    "description": "اعثر على أفضل المنتجات هنا.",
+    "categories_heading": "الأقسام",
+    "best_sellers_heading": "الأكثر مبيعاً"
+  },
+  "Hero": {
+    "typewriter_messages": ["أفضل المنتجات", "أجود الخامات", "نبيع الأناقة"],
+    "shop_now": "تسوق الآن"
+  },
+  "Categories": {
+    "apparels": "الملابس",
+    "glasses": "النظارات"
+  },
+  "Policy": {
+    "exchange_title": "سياسة تبديل سهلة",
+    "exchange_description": "نوفر سياسة تبديل بدون تعقيدات",
+    "return_title": "سياسة إرجاع ٧ أيام",
+    "return_description": "نوفر سياسة إرجاع مجانية لمدة ٧ أيام",
+    "support_title": "دعم عملاء ٢٤/٧",
+    "support_description": "نوفر دعم عملاء على مدار الساعة"
+  },
+  "About": {
+    "title_part1": "حول",
+    "title_part2": "الشركة",
+    "our_mission": "مهمتنا",
+    "why_title_part1": "لماذا",
+    "why_title_part2": "تختارنا",
+    "quality_assurance": "ضمان الجودة",
+    "convenience": "الراحة",
+    "exceptional_service": "خدمة متميزة"
   },
   "Navigation": {
     "home": "الرئيسية",
@@ -18,8 +46,8 @@
     "wishlist": "المفضلة"
   },
   "Auth": {
-    "sign_in": "تسجيل الدخول",
     "login": "تسجيل الدخول",
+    "sign_in": "تسجيل الدخول",
     "sign_in_description": "يرجى تسجيل الدخول إلى حسابك",
     "create_account": "إنشاء حساب",
     "create_account_description": "يرجى ملء المعلومات الخاصة بك للتسجيل",
@@ -73,5 +101,62 @@
     "loading": "جاري التحميل...",
     "error": "خطأ",
     "success": "نجح"
+  },
+  "Product": {
+    "add_to_cart": "أضف إلى السلة",
+    "add_to_wishlist": "أضف إلى المفضلة",
+    "adding": "جاري الإضافة...",
+    "select_size": "اختر المقاس",
+    "original_product": "منتج أصلي 100%",
+    "cash_on_delivery": "الدفع عند الاستلام",
+    "easy_return": "إرجاع واستبدال سهل خلال 30 يوماً",
+    "description": "الوصف",
+    "reviews": "التقييمات",
+    "rating_count": "(122)"
+  },
+  "Cart": {
+    "cart": "السلة",
+    "your_cart": "سلتك",
+    "cart_total": "إجمالي السلة",
+    "subtotal": "المجموع الفرعي",
+    "shipping_fee": "رسوم الشحن",
+    "total": "الإجمالي",
+    "proceed_to_checkout": "متابعة للدفع",
+    "cart_empty": "سلتك فارغة",
+    "remove_item": "إزالة العنصر",
+    "quantity": "الكمية"
+  },
+  "Checkout": {
+    "delivery_information": "معلومات التوصيل",
+    "payment_method": "طريقة الدفع",
+    "place_order": "تأكيد الطلب",
+    "first_name": "الاسم الأول",
+    "last_name": "اسم العائلة",
+    "email_address": "عنوان البريد الإلكتروني",
+    "street": "الشارع",
+    "city": "المدينة",
+    "state": "المنطقة",
+    "zipcode": "الرمز البريدي",
+    "country": "البلد",
+    "phone": "الهاتف",
+    "order_confirmed": "تم تأكيد الطلب",
+    "thank_you": "شكراً لطلبك!",
+    "redirecting": "جاري التوجيه..."
+  },
+  "Filters": {
+    "filters": "الفلاتر",
+    "categories": "الفئات",
+    "type": "النوع",
+    "sort_by": "ترتيب حسب:",
+    "relevant": "الأكثر صلة",
+    "low_to_high": "من الأقل للأعلى",
+    "high_to_low": "من الأعلى للأقل",
+    "no_products_found": "لا توجد منتجات"
+  },
+  "OrderReview": {
+    "review_order": "مراجعة طلبك",
+    "confirm_order": "تأكيد الطلب",
+    "each": "للقطعة",
+    "shipping": "الشحن"
   }
 }

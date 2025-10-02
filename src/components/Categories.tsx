@@ -4,6 +4,7 @@ import { assets } from "@/data/assets";
 import { products, Product } from "@/data/products";
 import CategoryProduct from "./CategoryProduct";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const Categories = () => {
   interface Category {
@@ -13,16 +14,17 @@ const Categories = () => {
   }
 
   const router = useRouter();
+  const t = useTranslations("Categories");
   const [apparels, setApparels] = useState<Product[]>([]);
 
   const categories: Category[] = [
     {
-      name: "Apparels",
+      name: t("apparels"),
       imageUrl: assets.apparel_bg,
       url: "/category/apparel",
     },
     {
-      name: "Glasses",
+      name: t("glasses"),
       imageUrl: assets.glasses_bg,
       url: "/category/glasses",
     },

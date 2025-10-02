@@ -5,8 +5,10 @@ import { assets } from "@/data/assets";
 import { products } from "@/data/products";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
+import { getProductName, getProductDescription } from "@/utils/productHelpers";
 
-import { Product as ProductsType } from "@/data/types";
+import { Product as ProductsType } from "@/data/products";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -16,6 +18,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
   const { productId } = React.use(params);
   const { state, dispatch, actions } = useContext(ShopContext);
+  const locale = useLocale();
+  const t = useTranslations("Product");
   const [productData, setProductData] = useState<ProductsType | null>(null);
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(false);
@@ -103,7 +107,7 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
           <div className="flex sm:flex-col hide-scrollbar overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
             {productData.image.map((item, index) => (
               <Image
-                alt={productData.name}
+                alt={getProductName(productData, locale)}
                 width={500}
                 height={500}
                 onClick={() => setImage(item)}
@@ -115,7 +119,7 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
           </div>
           <div className="w-full h-full sm:w-[80%]">
             <Image
-              alt={productData.name}
+              alt={getProductName(productData, locale)}
               src={image}
               width={500}
               height={500}
@@ -125,7 +129,9 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
         </div>
         {/* product details */}
         <div className="flex-1">
-          <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
+          <h1 className="font-medium text-2xl mt-2">
+            {getProductName(productData, locale)}
+          </h1>
           <div className="flex items-center gap-1 mt-1">
             {/* rating stars and count */}
             <img src={assets.star_icon} alt="" className="w-3" />
@@ -133,15 +139,15 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
             <img src={assets.star_icon} alt="" className="w-3" />
             <img src={assets.star_icon} alt="" className="w-3" />
             <img src={assets.star_icon} alt="" className="w-3" />
-            <p className="pls-2">(122)</p>
+            <p className="pls-2">{t("rating_count")}</p>
           </div>
           {/* currency and price */}
           <p className="mt-2 text-2xl font-medium">${productData.price}</p>
           <p className="mt-2 text-gray-500 md:w-4/5">
-            {productData.description}
+            {getProductDescription(productData, locale)}
           </p>
           <div className="flex flex-col gap-4 my-4">
-            <p>Select Size</p>
+            <p>{t("select_size")}</p>
             <div className="flex gap-2">
               {productData.sizes.map((item: any, index: number) => (
                 <button
@@ -166,20 +172,20 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
                   : "cursor-pointer bg-black hover:opacity-85 active:bg-gray-700"
               }`}
             >
-              {isAdding ? "Adding..." : "Add To Cart"}
+              {isAdding ? t("adding") : t("add_to_cart")}
             </button>
             <button
               onClick={() => handleAddToWhishlist(productData, size)}
               className="hover cursor-pointer bg-black hover:opacity-85 text-white text-xs px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-500"
             >
-              Add To wishlist
+              {t("add_to_wishlist")}
             </button>
           </div>
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
-            <p>100% Original Product</p>
-            <p>Cash on Delivery</p>
-            <p>Easy return and exchange within 30 days</p>
+            <p>{t("original_product")}</p>
+            <p>{t("cash_on_delivery")}</p>
+            <p>{t("easy_return")}</p>
           </div>
         </div>
       </div>

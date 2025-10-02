@@ -3,11 +3,14 @@ import React, { useContext } from "react";
 import Title from "@/components/Title";
 import { assets } from "@/data/assets";
 import { ShopContext } from "@/context/ShopContext";
+import { useTranslations } from "next-intl";
 const About = () => {
+  const t = useTranslations("About");
+
   return (
     <div className="bg-gray-50">
       <div className="text-2xl text-center pt-8 border-t">
-        <Title t1={"about"} t2={"us"} />
+        <Title t1={t("title_part1")} t2={t("title_part2")} />
       </div>
       <div className="my-10 flex flex-col md:flex-row gap-16">
         <img src={assets.about_img} className="w-full md:max-w-[450px]" />
@@ -24,7 +27,7 @@ const About = () => {
             voluptas fugit, harum officia, repellat fuga repudiandae placeat
             ullam adipisci atque provident delectus.
           </p>
-          <b className="text-gray-800">Our Mission</b>
+          <b className="text-gray-800">{t("our_mission")}</b>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi enim
             eveniet iste saepe minima provident a eos sint molestias quae, ex
@@ -34,25 +37,25 @@ const About = () => {
         </div>
       </div>
       <div className="text-4xl py-4">
-        <Title t1={"why"} t2={"choose us"} />
+        <Title t1={t("why_title_part1")} t2={t("why_title_part2")} />
       </div>
       <div className="flex flex-col md:flex-row text-sm mb-20">
         <div className="border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5">
-          <b>Quality Assurance</b>
+          <b>{t("quality_assurance")}</b>
           <p className="text-gray-600">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
             vel.
           </p>
         </div>
         <div className="border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5">
-          <b>Convenience</b>
+          <b>{t("convenience")}</b>
           <p className="text-gray-600">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
             vel.
           </p>
         </div>
         <div className="border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5">
-          <b>Exceptional Service</b>
+          <b>{t("exceptional_service")}</b>
           <p className="text-gray-600">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
             vel.

@@ -8,10 +8,14 @@ import CardSkeleton from "./CardSkeleton";
 
 const BestSellers = () => {
   interface Product {
-    name: string;
+    _id: string;
+    name_en: string;
+    name_ar: string;
     price: number;
+    image: string[];
     category: string;
     subCategory: string;
+    bestseller: boolean;
     [key: string]: any;
   }
   //   const { products } = useContext(ShopContext);
@@ -21,7 +25,7 @@ const BestSellers = () => {
 
   useEffect(() => {
     const BestSellers = products.filter((item) => (item.bestseller = true));
-    setBestSellers(BestSellers.slice(0, 10));
+    setBestSellers(BestSellers.slice(12, 23));
   }, []);
   return (
     <div className="my-10">
@@ -33,7 +37,8 @@ const BestSellers = () => {
                 key={index}
                 _id={product._id}
                 image={product.image}
-                name={product.name}
+                name_en={product.name_en}
+                name_ar={product.name_ar}
                 price={product.price}
               />
             ))}

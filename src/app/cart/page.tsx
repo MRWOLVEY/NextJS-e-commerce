@@ -3,6 +3,8 @@ import React from "react";
 import { useContext, useEffect, useState, useMemo } from "react";
 import { ShopContext } from "@/context/ShopContext";
 import Title from "@/components/Title";
+import { useTranslations, useLocale } from "next-intl";
+import { getProductName } from "@/utils/productHelpers";
 import { assets } from "@/data/assets";
 import CartTotal from "@/components/CartTotal";
 import { useRouter } from "next/navigation";
@@ -24,6 +26,8 @@ const Cart = () => {
   };
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("Cart");
   const delivery_fee = 10;
 
   const getTotal = (cart: any) => {
@@ -61,10 +65,13 @@ const Cart = () => {
   return (
     <div className="pt-14">
       <div className="text-2xl mb-3">
-        <Title t1={"your"} t2={"cart"} />
+        <Title
+          t1={t("your_cart").split(" ")[0]}
+          t2={t("your_cart").split(" ")[1]}
+        />
         {state.cartProductsCount == 0 ? (
           <div className="w-full min-h-16.5 flex justify-center items-center">
-            <p className="text-gray-500">Your cart is empty</p>
+            <p className="text-gray-500">{t("cart_empty")}</p>
           </div>
         ) : null}
         {cartData.map((item, index) => {
@@ -78,7 +85,7 @@ const Cart = () => {
                 <img className="w-16 sm:w-20" src={item.data.image[0]} alt="" />
                 <div>
                   <p className="text-xs sm:text-lg font-medium ">
-                    {item.data.name}
+                    {getProductName(item.data, locale)}
                   </p>
                   <div className="flex items-center gap-5 mt-2">
                     <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
@@ -135,7 +142,7 @@ const Cart = () => {
                   onClick={() => router.push("/checkout")}
                   className="bg-black hover:opacity-85 text-white text-xs my-5 px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-200 uppercase transition-all duration-100"
                 >
-                  proceed to checkout
+                  {t("proceed_to_checkout")}
                 </button>
               </div>
             </>

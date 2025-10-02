@@ -1,7 +1,35 @@
 {
   "HomePage": {
     "title": "Welcome to Our Store",
-    "description": "Find the best products here."
+    "description": "Find the best products here.",
+    "categories_heading": "categories",
+    "best_sellers_heading": "best sellers"
+  },
+  "Hero": {
+    "typewriter_messages": ["Best Products", "Best Quality", "We Sell Style"],
+    "shop_now": "SHOP NOW"
+  },
+  "Categories": {
+    "apparels": "Apparels",
+    "glasses": "Glasses"
+  },
+  "Policy": {
+    "exchange_title": "easy exchange policy",
+    "exchange_description": "we offer hassle-free exchange policy",
+    "return_title": "7 days return policy",
+    "return_description": "we offer 7-days free return policy",
+    "support_title": "24/7 customer support",
+    "support_description": "we provide 24/7 customer support"
+  },
+  "About": {
+    "title_part1": "about",
+    "title_part2": "us",
+    "our_mission": "Our Mission",
+    "why_title_part1": "why",
+    "why_title_part2": "choose us",
+    "quality_assurance": "Quality Assurance",
+    "convenience": "Convenience",
+    "exceptional_service": "Exceptional Service"
   },
   "Navigation": {
     "home": "HOME",
@@ -18,6 +46,7 @@
     "wishlist": "Wishlist"
   },
   "Auth": {
+    "login": "Login",
     "sign_in": "Sign In",
     "sign_in_description": "Please sign in to your account",
     "create_account": "Create Account",
@@ -72,5 +101,62 @@
     "loading": "Loading...",
     "error": "Error",
     "success": "Success"
+  },
+  "Product": {
+    "add_to_cart": "Add To Cart",
+    "add_to_wishlist": "Add To Wishlist",
+    "adding": "Adding...",
+    "select_size": "Select Size",
+    "original_product": "100% Original Product",
+    "cash_on_delivery": "Cash on Delivery",
+    "easy_return": "Easy return and exchange within 30 days",
+    "description": "Description",
+    "reviews": "Reviews",
+    "rating_count": "(122)"
+  },
+  "Cart": {
+    "cart": "Cart",
+    "your_cart": "Your Cart",
+    "cart_total": "Cart Total",
+    "subtotal": "Subtotal",
+    "shipping_fee": "Shipping Fee",
+    "total": "Total",
+    "proceed_to_checkout": "Proceed to Checkout",
+    "cart_empty": "Your cart is empty",
+    "remove_item": "Remove Item",
+    "quantity": "Quantity"
+  },
+  "Checkout": {
+    "delivery_information": "Delivery Information",
+    "payment_method": "Payment Method",
+    "place_order": "Place Order",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email_address": "Email Address",
+    "street": "Street",
+    "city": "City",
+    "state": "State",
+    "zipcode": "Zipcode",
+    "country": "Country",
+    "phone": "Phone",
+    "order_confirmed": "Order Confirmed",
+    "thank_you": "Thank you for your order!",
+    "redirecting": "Redirecting..."
+  },
+  "Filters": {
+    "filters": "FILTERS",
+    "categories": "CATEGORIES",
+    "type": "TYPE",
+    "sort_by": "Sort by:",
+    "relevant": "Relevant",
+    "low_to_high": "Low to High",
+    "high_to_low": "High to Low",
+    "no_products_found": "No products found"
+  },
+  "OrderReview": {
+    "review_order": "Review Your Order",
+    "confirm_order": "Confirm Order",
+    "each": "each",
+    "shipping": "Shipping"
   }
 }

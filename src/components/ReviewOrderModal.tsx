@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useMemo } from "react";
 import { ShopContext } from "@/context/ShopContext";
 import { products } from "@/data/products";
 import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { getProductName } from "@/utils/productHelpers";
 import { set } from "zod";
 
 const ReviewOrderModal = ({
@@ -14,6 +16,9 @@ const ReviewOrderModal = ({
 }) => {
   const { state, dispatch } = useContext(ShopContext);
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("OrderReview");
+  const cartT = useTranslations("Cart");
   const handleDivClick = () => {
     setShowModal(false);
   };
@@ -24,7 +29,7 @@ const ReviewOrderModal = ({
 
   const handleConfirm = (e: React.MouseEvent) => {
     setShowModal(false);
-    setConfirmed(true); 
+    setConfirmed(true);
     setTimeout(() => {
       dispatch({ type: "CLEAR_CART" });
       router.push("/");
@@ -49,7 +54,7 @@ const ReviewOrderModal = ({
 
       return {
         id: productId,
-        name: product.name,
+        name: getProductName(product, locale),
         image: product.image[0],
         sizeCount: sizeData, // Object with size as key and count as value
         price: product.price,
@@ -78,11 +83,11 @@ const ReviewOrderModal = ({
       >
         <div className="flex flex-col gap-1">
           <h1 className="text-lg font-semibold text-center">
-            Review Your Order
+            {t("review_order")}
           </h1>
           <div className="bg-gray-50 flex flex-col p-4 gap-4 max-h-80 overflow-y-auto">
             {cartItemsList.length === 0 ? (
-              <p className="text-gray-500 text-center">Your cart is empty</p>
+              <p className="text-gray-500 text-center">{cartT("cart_empty")}</p>
             ) : (
               cartItemsList.map((item) => (
                 <div
@@ -104,7 +109,7 @@ const ReviewOrderModal = ({
                       {item.name}
                     </h4>
                     <p className="text-xs text-gray-600 mb-2">
-                      ${item.price} each
+                      ${item.price} {t("each")}
                     </p>
 
                     {/* Size and Count Details */}
@@ -134,15 +139,21 @@ const ReviewOrderModal = ({
         <div className=" flex px-4 justify-between">
           <div className="flex flex-col gap-1 w-fit">
             <div className="flex gap-3">
-              <span className="text-gray-600 font-semibold">Subtotal:</span>
+              <span className="text-gray-600 font-semibold">
+                {cartT("subtotal")}:
+              </span>
               <span className="font-bold">${state.total}</span>
             </div>
             <div className="flex gap-3">
-              <span className="text-gray-600 font-semibold">Shipping:</span>
+              <span className="text-gray-600 font-semibold">
+                {t("shipping")}:
+              </span>
               <span className="font-bold">$10</span>
             </div>
             <div className="flex gap-3">
-              <span className="text-gray-600 font-semibold">Total:</span>
+              <span className="text-gray-600 font-semibold">
+                {cartT("total")}:
+              </span>
               <span className="font-bold text-lg">${state.total + 10}</span>
             </div>
           </div>
@@ -151,7 +162,7 @@ const ReviewOrderModal = ({
               onClick={handleConfirm}
               className="bg-black hover:bg-gray-700 text-white px-4 py-2 rounded-md"
             >
-              Confirm Order
+              {t("confirm_order")}
             </button>
           </div>
         </div>

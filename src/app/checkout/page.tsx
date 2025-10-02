@@ -2,6 +2,7 @@
 import React, { useContext, useState } from "react";
 import Title from "@/components/Title";
 import CartTotal from "@/components/CartTotal";
+import { useTranslations } from "next-intl";
 import { assets } from "@/data/assets";
 import { ShopContext } from "@/context/ShopContext";
 import { useRouter } from "next/navigation";
@@ -16,6 +17,8 @@ const PlaceOrder = () => {
   const [showModal, setShowModal] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const router = useRouter();
+  const t = useTranslations("Checkout");
+  const productT = useTranslations("Product");
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log(data);
@@ -32,7 +35,10 @@ const PlaceOrder = () => {
               <CartTotal />
             </div>
             <div className="mt-12">
-              <Title t1={"payment"} t2={"method"} />
+              <Title
+                t1={t("payment_method").split(" ")[0]}
+                t2={t("payment_method").split(" ")[1]}
+              />
             </div>
             {/* paymnet methods selection */}
             <div className="flex gap-3 flex-col lg:flex-row">
@@ -68,7 +74,7 @@ const PlaceOrder = () => {
                   }`}
                 ></p>
                 <p className="uppercase text-gray-500 text-sm font-medium mx-4">
-                  cash on delivery
+                  {productT("cash_on_delivery")}
                 </p>
               </div>
             </div>
@@ -80,7 +86,7 @@ const PlaceOrder = () => {
                 }}
                 className="bg-black hover:opacity-85 text-white text-xs my-5 px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-200 uppercase transition-all duration-100"
               >
-                review order
+                {t("place_order")}
               </button>
               {showModal && (
                 <ReviewOrderModal
@@ -93,9 +99,9 @@ const PlaceOrder = () => {
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center w-full">
-          <h1 className="text-4xl font-semibold">Order Confirmed</h1>
-          <p className="text-gray-500">Thank you for your order!</p>
-          <p className="text-gray-500">redirecting...</p>
+          <h1 className="text-4xl font-semibold">{t("order_confirmed")}</h1>
+          <p className="text-gray-500">{t("thank_you")}</p>
+          <p className="text-gray-500">{t("redirecting")}</p>
         </div>
       )}
     </div>

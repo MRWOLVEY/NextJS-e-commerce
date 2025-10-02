@@ -1,8 +1,11 @@
 "use client";
 import React from "react";
 import { assets } from "@/data/assets";
+import { useTranslations } from "next-intl";
 
 const OurPolicy = () => {
+  const t = useTranslations("Policy");
+
   return (
     <div
       id="lol"
@@ -11,29 +14,29 @@ const OurPolicy = () => {
       <div>
         <img
           src={assets.exchange_icon}
-          alt="exhange"
+          alt="exchange"
           className="w-12 m-auto mb-5"
         />
-        <p className="font-semibold uppercase">easy exhange policy</p>
-        <p className="text-gray-400">we offer hassle-free exchange policy</p>
+        <p className="font-semibold uppercase">{t("exchange_title")}</p>
+        <p className="text-gray-400">{t("exchange_description")}</p>
       </div>
       <div>
         <img
           src={assets.quality_icon}
-          alt="exhange"
+          alt="return"
           className="w-12 m-auto mb-5"
         />
-        <p className="font-semibold uppercase">7 days return policy</p>
-        <p className="text-gray-400">we offer 7-days free return policy</p>
+        <p className="font-semibold uppercase">{t("return_title")}</p>
+        <p className="text-gray-400">{t("return_description")}</p>
       </div>
       <div>
         <img
           src={assets.support_img}
-          alt="exhange"
+          alt="support"
           className="w-12 m-auto mb-5"
         />
-        <p className="font-semibold uppercase">24/7 customer support</p>
-        <p className="text-gray-400">we provide 24/7 customer support</p>
+        <p className="font-semibold uppercase">{t("support_title")}</p>
+        <p className="text-gray-400">{t("support_description")}</p>
       </div>
     </div>
   );

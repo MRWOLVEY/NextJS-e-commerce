@@ -9,10 +9,11 @@ import React from "react";
 import Image from "next/image";
 import { assets } from "@/data/assets";
 import TextType from "./text-type/TextType";
-import { fa } from "zod/locales";
+import { useTranslations } from "next-intl";
 
 const Hero = () => {
   const router = useRouter();
+  const t = useTranslations("Hero");
   const [loading, setLoading] = useState<boolean>(false);
   // useEffect(() => {
   //   const timer: NodeJS.Timeout = setTimeout(() => {
@@ -29,7 +30,7 @@ const Hero = () => {
         <div className="text-[#414141]">
           <TextType
             className="text-3xl sm:py-3 lg:text-5xl leading-relaxed"
-            text={["Best Products", "Best Quality", "We Sell Style"]}
+            text={t.raw("typewriter_messages") as string[]}
             typingSpeed={60}
             pauseDuration={2000}
             showCursor={true}
@@ -43,7 +44,7 @@ const Hero = () => {
               router.push("/category/apparel");
             }}
           >
-            <p className="font-semibold text-sm md:text-2xl">SHOP NOW</p>
+            <p className="font-semibold text-sm md:text-2xl">{t("shop_now")}</p>
             <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p>
           </button>
         </div>

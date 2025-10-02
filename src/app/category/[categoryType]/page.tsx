@@ -12,6 +12,7 @@ import Title from "@/components/Title";
 import ProductItem from "@/components/ProductItem";
 import Filters from "@/components/Filters";
 import ProductGrid from "@/components/ProductGrid";
+import { searchProducts } from "@/utils/productHelpers";
 
 const Page = ({ params }: { params: Promise<{ categoryType: string }> }) => {
   const { categoryType } = React.use(params);
@@ -26,8 +27,11 @@ const Page = ({ params }: { params: Promise<{ categoryType: string }> }) => {
   const [sortType, setSortType] = useState<SortType>("relevant");
 
   interface Product {
-    name: string;
+    _id: string;
+    name_en: string;
+    name_ar: string;
     price: number;
+    image: string[];
     type: string;
     category: string;
     subCategory: string;
@@ -62,11 +66,9 @@ const Page = ({ params }: { params: Promise<{ categoryType: string }> }) => {
   const applyFilter = () => {
     let productsCopy = products.slice();
 
-    showSearch && search
-      ? (productsCopy = productsCopy.filter((item) =>
-          item.name.toLowerCase().includes(search.toLowerCase())
-        ))
-      : null;
+    if (showSearch && search) {
+      productsCopy = searchProducts(productsCopy, search);
+    }
 
     if (category.length > 0) {
       productsCopy = productsCopy.filter((product) =>

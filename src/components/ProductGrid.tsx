@@ -2,13 +2,17 @@
 import React, { useMemo, useState } from "react";
 import ProductItem from "@/components/ProductItem";
 import Title from "@/components/Title";
+import { useTranslations } from "next-intl";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CardSkeleton from "./CardSkeleton";
 
 interface Product {
-  name: string;
+  _id: string;
+  name_en: string;
+  name_ar: string;
   price: number;
+  image: string[];
   type: string;
   category: string;
   subCategory: string;
@@ -25,6 +29,7 @@ const ProductGrid = ({
   filteredProducts: Product[];
   setSortType: React.Dispatch<React.SetStateAction<SortType>>;
 }) => {
+  const t = useTranslations("Filters");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState<number>(8);
   const lastProductIndex = useMemo(
@@ -52,15 +57,15 @@ const ProductGrid = ({
         <Title t1="" t2={categoryType + "s"} />
         {/* product sort */}
         <div className="flex items-center gap-2">
-          <p className="hidden sm:block text-base">Sort by:</p>
+          <p className="hidden sm:block text-base">{t("sort_by")}</p>
           <select
             onChange={(e) => setSortType(e.target.value as SortType)}
             className="border border-gray-300 text-base rounded-sm"
-            aria-placeholder="sort by"
+            aria-placeholder={t("sort_by")}
           >
-            <option value="relevant">Relevant</option>
-            <option value="low-high">Low to high</option>
-            <option value="high-low">High to low</option>
+            <option value="relevant">{t("relevant")}</option>
+            <option value="low-high">{t("low_to_high")}</option>
+            <option value="high-low">{t("high_to_low")}</option>
           </select>
         </div>
       </div>

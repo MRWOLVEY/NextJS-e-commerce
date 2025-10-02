@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import classNames from "classnames";
+import { useTranslations } from "next-intl";
 import { assets } from "@/data/assets";
 
 interface FiltersProps {
@@ -22,11 +23,13 @@ const Filters = ({
   categories,
   subcategories,
 }: FiltersProps) => {
+  const t = useTranslations("Filters");
+
   return (
     // <div>
     <div className="min-w-60 h-fit transition duration-100 ease-in-out">
       <p className="my-2 text-xl flex items-center gap-2 cursor-pointer">
-        FILTERS
+        {t("filters").toUpperCase()}
         <img
           src={assets.dropdown_icon}
           alt=""
@@ -49,7 +52,7 @@ const Filters = ({
         )}
       >
         <div className="border border-gray-300 pl-5 py-3 mt-6">
-          <p className="mb-3 text-sm font-medium">Categories</p>
+          <p className="mb-3 text-sm font-medium">{t("categories")}</p>
           <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
             {categories.length > 0 &&
               categories.map((cat, i) => (
@@ -71,7 +74,7 @@ const Filters = ({
             "": !showFilter,
           })}
         >
-          <p className="mb-3 text-sm font-medium">Type</p>
+          <p className="mb-3 text-sm font-medium">{t("type")}</p>
           <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
             {subcategories.length > 0 &&
               subcategories.map((subcat, i) => (
