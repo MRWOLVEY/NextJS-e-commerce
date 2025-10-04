@@ -6,6 +6,7 @@ import Title from "@/components/Title";
 import { useAssets, useProducts } from "@/hooks/useApi";
 import CartTotal from "@/components/CartTotal";
 import { useRouter } from "next/navigation";
+import { useTranslations } from 'next-intl';
 
 type CartItem = {
   [size: string]: number;
@@ -16,6 +17,7 @@ type CartState = {
 };
 
 const Cart = () => {
+  const t = useTranslations('Wishlist');
   const { state, dispatch, actions } = useContext(ShopContext) as unknown as {
     state: {
       wishlist: CartState;
@@ -69,10 +71,10 @@ const Cart = () => {
   return (
     <div className="pt-14">
       <div className="text-2xl mb-3">
-        <Title t1={"your"} t2={"wishlist"} />
+        <Title t1={t("your")} t2={t("wishlist")} />
         {state.wishlistProductsCount == 0 ? (
           <div className=" w-full min-h-16.5 flex justify-center items-center">
-            <p className="text-gray-500">Your wishlist is empty</p>
+            <p className="text-gray-500">{t("wishlist_empty")}</p>
           </div>
         ) : null}
         {cartData.map((item, index) => {
@@ -106,7 +108,7 @@ const Cart = () => {
                   }
                   className="w-4 mr-4 sm:w-5 cursor-pointer"
                   src={assets?.bin_icon || "/images/bin_icon.png"}
-                  alt=""
+                  alt={t("remove_from_wishlist")}
                 />
               </div>
               <div className="w-full flex justify-end mt-4 sm:mt-0">
@@ -114,7 +116,7 @@ const Cart = () => {
                   onClick={() => router.push("/product/" + item.id)}
                   className="bg-black hover:opacity-85 text-white text-sm text-nowrap p-2 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-200 uppercase transition-all duration-100"
                 >
-                  See Product
+                  {t("see_product")}
                 </button>
               </div>
             </div>

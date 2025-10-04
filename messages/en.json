@@ -79,6 +79,11 @@
       "title": "Premium Fashion Collection - Apparel & Glasses",
       "description": "Browse our extensive collection of premium apparel and designer glasses. Find your perfect style with quality guaranteed.",
       "keywords": "fashion collection, apparel, glasses, premium products, designer wear"
+    },
+    "wishlist": {
+      "title": "Your Wishlist - Saved Fashion Items",
+      "description": "View and manage your saved fashion items. Easy access to your favorite apparel and glasses collections.",
+      "keywords": "wishlist, saved items, favorite products, fashion wishlist, apparel collection"
     }
   },
   "Navigation": {
@@ -237,5 +242,12 @@
     "confirm_order": "Confirm Order",
     "each": "each",
     "shipping": "Shipping"
+  },
+  "Wishlist": {
+    "your": "your",
+    "wishlist": "wishlist",
+    "wishlist_empty": "Your wishlist is empty",
+    "see_product": "See Product",
+    "remove_from_wishlist": "Remove from wishlist"
   }
 }
