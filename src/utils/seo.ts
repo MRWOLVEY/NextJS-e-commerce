@@ -13,9 +13,10 @@ export function generateMetadata(
   seoConfig: SEOConfig,
   locale: string = "en"
 ): Metadata {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}` 
-    : "http://localhost:3000";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000";
   const currentUrl = seoConfig.canonical || baseUrl;
 
   return {
@@ -79,9 +80,10 @@ export function generateHreflangLinks(
 }
 
 export function generateProductSchema(product: any, locale: string = "en") {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}` 
-    : "http://localhost:3000";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000";
 
   return {
     "@context": "https://schema.org",
@@ -163,9 +165,10 @@ export function generateOrganizationSchema(locale: string = "en") {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: locale === "ar" ? "متجر الأزياء المميز" : "Premium Fashion Store",
-    url: process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : "http://localhost:3000",
+    url:
+      process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000",
     logo: "/images/logo.png",
     contactPoint: {
       "@type": "ContactPoint",
