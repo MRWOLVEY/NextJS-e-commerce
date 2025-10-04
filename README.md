@@ -171,6 +171,11 @@ npm run start
 
 ### Lighthouse Screenshots
 
+![Desktop EN](./lighthouse/DeskEN.png)
+![Desktop AR](./lighthouse/DeskAR.png)
+![Mobile EN](./lighthouse/MobEN.png)
+![Mobile AR](./lighthouse/MobAR.png)
+
 ## Project Structure
 
 ```
