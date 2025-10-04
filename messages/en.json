@@ -31,6 +31,24 @@
     "convenience": "Convenience",
     "exceptional_service": "Exceptional Service"
   },
+  "RelatedProducts": {
+    "title_part1": "related",
+    "title_part2": "products"
+  },
+  "Error": {
+    "not_found_title_1": "page",
+    "not_found_title_2": "not found",
+    "page_not_found": "Page Not Found",
+    "not_found_description": "The page you're looking for doesn't exist or has been moved.",
+    "product_not_found_title_1": "product",
+    "product_not_found_title_2": "not found",
+    "product_not_found": "Product Not Found",
+    "product_not_found_description": "The product you're looking for doesn't exist or is no longer available.",
+    "back_to_home": "Back to Home",
+    "contact_support": "Contact Support",
+    "browse_products": "Browse Products",
+    "you_might_like": "You Might Like"
+  },
   "SEO": {
     "home": {
       "title": "Premium Fashion Store - Best Quality Apparel & Glasses",
@@ -93,6 +111,25 @@
     "signing_in": "Signing In...",
     "registering": "Registering...",
     "register": "Register",
+
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "address": "Address",
+    "city": "City",
+    "postal_code": "Postal Code",
+    "country": "Country",
+    "phone_number": "Phone Number",
+    "min_length_4": "Minimum length is 4",
+    "min_length_2": "Name must be at least 2 characters",
+    "min_length_6": "Password must be at least 6 characters",
+    "invalid_email": "Invalid email address",
+    "email_required": "Email is required",
+    "password_required": "Password is required",
+    "address_required": "Address is required",
+    "city_required": "City is required",
+    "postal_code_required": "Postal code is required",
+    "invalid_phone": "Invalid phone number",
+    "password_complexity": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
     "dont_have_account": "Don't have an account?",
     "already_have_account": "Already have an account?",
     "create_account_link": "Create account",
@@ -127,7 +164,17 @@
     "enter_subject": "Enter message subject",
     "enter_message": "Enter your message",
     "send_message_button": "Send Message",
-    "sending_message": "Sending Message..."
+    "sending_message": "Sending Message...",
+    "name_min_2": "Name must be at least 2 characters",
+    "name_max_50": "Name must be less than 50 characters",
+    "invalid_email_format": "Invalid email address",
+    "email_field_required": "Email is required",
+    "phone_min_10": "Phone number must be at least 10 digits",
+    "phone_invalid_format": "Invalid phone number format",
+    "subject_min_5": "Subject must be at least 5 characters",
+    "subject_max_100": "Subject must be less than 100 characters",
+    "message_min_10": "Message must be at least 10 characters",
+    "message_max_1000": "Message must be less than 1000 characters"
   },
   "Common": {
     "loading": "Loading...",

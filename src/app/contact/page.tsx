@@ -6,44 +6,48 @@ import { z } from "zod";
 import { useTranslations } from "next-intl";
 import Title from "@/components/Title";
 
-// Zod validation schema
-const contactSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: "Name must be at least 2 characters" })
-    .max(50, { message: "Name must be less than 50 characters" }),
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(1, { message: "Email is required" }),
-  phone: z
-    .string()
-    .min(10, { message: "Phone number must be at least 10 digits" })
-    .regex(/^\+?[\d\s\-\(\)]+$/, { message: "Invalid phone number format" })
-    .optional()
-    .or(z.literal("")),
-  subject: z
-    .string()
-    .min(5, { message: "Subject must be at least 5 characters" })
-    .max(100, { message: "Subject must be less than 100 characters" }),
-  message: z
-    .string()
-    .min(10, { message: "Message must be at least 10 characters" })
-    .max(1000, { message: "Message must be less than 1000 characters" }),
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
+// Create validation schema with translations
+const createContactSchema = (t: any) =>
+  z.object({
+    name: z
+      .string()
+      .min(2, { message: t("name_min_2") })
+      .max(50, { message: t("name_max_50") }),
+    email: z
+      .string()
+      .email({ message: t("invalid_email_format") })
+      .min(1, { message: t("email_field_required") }),
+    phone: z
+      .string()
+      .min(10, { message: t("phone_min_10") })
+      .regex(/^\+?[\d\s\-\(\)]+$/, { message: t("phone_invalid_format") })
+      .optional()
+      .or(z.literal("")),
+    subject: z
+      .string()
+      .min(5, { message: t("subject_min_5") })
+      .max(100, { message: t("subject_max_100") }),
+    message: z
+      .string()
+      .min(10, { message: t("message_min_10") })
+      .max(1000, { message: t("message_max_1000") }),
+  });
 
 const ContactPage = () => {
   const t = useTranslations("Contact");
+  const contactSchema = createContactSchema(t);
+  type ContactFormData = z.infer<typeof contactSchema>;
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, touchedFields },
     reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
+    mode: "onBlur", // Validate on blur (less aggressive than onChange)
+    reValidateMode: "onChange", // Re-validate on change after first validation
+    delayError: 300, // Delay validation by 300ms to avoid flickering
   });
 
   const onSubmit: SubmitHandler<ContactFormData> = async (data) => {

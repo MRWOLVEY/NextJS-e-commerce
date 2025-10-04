@@ -6,34 +6,37 @@ import { z } from "zod";
 import { useTranslations } from "next-intl";
 import { ShopContext } from "@/context/ShopContext";
 
-// Zod validation schema
-const registrationSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(1, { message: "Email is required" }),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters" })
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
-      message:
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number",
-    }),
-});
-
-type RegistrationFormData = z.infer<typeof registrationSchema>;
+// Create validation schema with translations
+const createRegistrationSchema = (t: any) =>
+  z.object({
+    name: z.string().min(2, { message: t("min_length_2") }),
+    email: z
+      .string()
+      .email({ message: t("invalid_email") })
+      .min(1, { message: t("email_required") }),
+    password: z
+      .string()
+      .min(6, { message: t("min_length_6") })
+      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
+        message: t("password_complexity"),
+      }),
+  });
 
 const SignupPage = () => {
   const { dispatch, actions } = useContext(ShopContext);
   const t = useTranslations("Auth");
+  const registrationSchema = createRegistrationSchema(t);
+  type RegistrationFormData = z.infer<typeof registrationSchema>;
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, touchedFields },
   } = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
+    mode: "onBlur", // Validate on blur (less aggressive than onChange)
+    reValidateMode: "onChange", // Re-validate on change after first validation
+    delayError: 300, // Delay validation by 300ms to avoid flickering
   });
 
   const onSubmit: SubmitHandler<RegistrationFormData> = async (data) => {

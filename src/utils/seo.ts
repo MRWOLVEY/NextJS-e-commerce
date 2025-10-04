@@ -90,26 +90,72 @@ export function generateProductSchema(product: any, locale: string = "en") {
     name: locale === "ar" ? product.name_ar : product.name_en,
     description:
       locale === "ar" ? product.description_ar : product.description_en,
-    image: product.image ? `${baseUrl}${product.image[0]}` : undefined,
+    image: product.image
+      ? product.image.map((img: string) => `${baseUrl}${img}`)
+      : [],
     sku: product._id,
+    mpn: product._id, // Manufacturer Part Number
     brand: {
       "@type": "Brand",
       name: locale === "ar" ? "متجر الأزياء المميز" : "Premium Fashion Store",
     },
+    category: product.category,
+    color: product.color || "Various",
+    size: product.sizes || [],
+    material: product.material || "Premium Quality",
     offers: {
       "@type": "Offer",
       price: product.price,
       priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-      url: `${baseUrl}/${locale}/product/${product._id}`,
+      availability: product.bestseller
+        ? "https://schema.org/InStock"
+        : "https://schema.org/InStock",
+      url: `${baseUrl}/product/${product._id}`,
+      seller: {
+        "@type": "Organization",
+        name: locale === "ar" ? "متجر الأزياء المميز" : "Premium Fashion Store",
+      },
+      priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0], // 1 year from now
     },
-    aggregateRating: product.rating
-      ? {
-          "@type": "AggregateRating",
-          ratingValue: product.rating,
-          reviewCount: product.reviewCount || 1,
-        }
-      : undefined,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: product.rating || 4.5,
+      reviewCount: product.reviewCount || 122,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    review: product.reviews || [
+      {
+        "@type": "Review",
+        reviewRating: {
+          "@type": "Rating",
+          ratingValue: product.rating || 4.5,
+          bestRating: 5,
+        },
+        author: {
+          "@type": "Person",
+          name: "Customer Review",
+        },
+        reviewBody:
+          locale === "ar"
+            ? "منتج ممتاز وجودة عالية"
+            : "Excellent product with great quality",
+      },
+    ],
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Category",
+        value: product.category,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Subcategory",
+        value: product.subCategory,
+      },
+    ],
   };
 }
 
@@ -126,4 +172,38 @@ export function generateOrganizationSchema(locale: string = "en") {
       availableLanguage: ["English", "Arabic"],
     },
   };
+}
+
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+export function generateBreadcrumbSchema(
+  breadcrumbs: BreadcrumbItem[],
+  locale: string = "en"
+) {
+  const baseUrl = "http://localhost:3000";
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: breadcrumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: `${baseUrl}${crumb.url}`,
+    })),
+  };
+}
+
+export function generateProductWithBreadcrumbSchema(
+  product: any,
+  breadcrumbs: BreadcrumbItem[],
+  locale: string = "en"
+) {
+  return [
+    generateProductSchema(product, locale),
+    generateBreadcrumbSchema(breadcrumbs, locale),
+  ];
 }

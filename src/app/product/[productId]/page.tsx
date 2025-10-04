@@ -4,9 +4,13 @@ import { ShopContext } from "@/context/ShopContext";
 import { assets } from "@/data/assets";
 import { products } from "@/data/products";
 import { usePathname } from "next/navigation";
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { getProductName, getProductDescription } from "@/utils/productHelpers";
+import RelatedProducts from "@/components/RelatedProducts";
+import Breadcrumb from "@/components/Breadcrumb";
+import { BreadcrumbItem } from "@/utils/seo";
 
 import { Product as ProductsType } from "@/data/products";
 import Skeleton from "react-loading-skeleton";
@@ -25,6 +29,7 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
   // const [error, setError] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
+  const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([]);
   // const location = usePathname();
 
   const skeletonImages = Array.from({ length: 4 }, (_, i) => i + 1);
@@ -39,14 +44,39 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
   //   };
 
   useEffect(() => {
-    products.map((item) => {
-      if (item._id == productId) {
-        setProductData(item);
-        setImage(item.image[0]);
-        setLoading(false);
-      }
-    });
-  }, [productId, products]);
+    const product = products.find((item) => item._id === productId);
+
+    if (product) {
+      setProductData(product);
+      setImage(product.image[0]);
+
+      // Generate breadcrumbs based on actual site structure
+      const getCategoryName = (type: string) => {
+        if (type === "apparel") {
+          return locale === "ar" ? "الملابس" : "Apparel";
+        } else if (type === "glasses") {
+          return locale === "ar" ? "النظارات" : "Glasses";
+        }
+        return type.charAt(0).toUpperCase() + type.slice(1);
+      };
+
+      const breadcrumbItems: BreadcrumbItem[] = [
+        { name: locale === "ar" ? "الرئيسية" : "Home", url: "/" },
+        {
+          name: getCategoryName(product.type),
+          url: `/category/${product.type}`,
+        },
+        { name: getProductName(product, locale), url: `/product/${productId}` },
+      ];
+      setBreadcrumbs(breadcrumbItems);
+
+      setLoading(false);
+    } else {
+      // Product not found, trigger 404
+      setLoading(false);
+      notFound();
+    }
+  }, [productId, products, locale]);
 
   //   useEffect(() => {
   //     setSize("");
@@ -100,6 +130,9 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
     </div>
   ) : productData ? (
     <div className="pt-10 transition-opacity ease-in duration-500 opacity-100">
+      {/* Breadcrumbs */}
+      <Breadcrumb items={breadcrumbs} className="mb-6" />
+
       {/* product data */}
       <div className="flex gap-12 flex-col sm:flex-row">
         {/* product image */}
@@ -211,10 +244,10 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
         </div>
       </div> */}
       {/* realated products */}
-      {/* <RelatedProducts
+      <RelatedProducts
         category={productData.category}
         subCategory={productData.subCategory}
-      /> */}
+      />
     </div>
   ) : null;
 };

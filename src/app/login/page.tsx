@@ -7,28 +7,32 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ShopContext } from "@/context/ShopContext";
 
-// Zod validation schema
-const loginSchema = z.object({
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(1, { message: "Email is required" }),
-  password: z.string().min(1, { message: "Password is required" }),
-});
-
-type LoginFormData = z.infer<typeof loginSchema>;
+// Create validation schema with translations
+const createLoginSchema = (t: any) =>
+  z.object({
+    email: z
+      .string()
+      .email({ message: t("invalid_email") })
+      .min(1, { message: t("email_required") }),
+    password: z.string().min(1, { message: t("password_required") }),
+  });
 
 const LoginPage = () => {
   const { dispatch, actions } = useContext(ShopContext);
   const router = useRouter();
   const t = useTranslations("Auth");
+  const loginSchema = createLoginSchema(t);
+  type LoginFormData = z.infer<typeof loginSchema>;
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, touchedFields },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    mode: "onBlur", // Validate on blur (less aggressive than onChange)
+    reValidateMode: "onChange", // Re-validate on change after first validation
+    delayError: 300, // Delay validation by 300ms to avoid flickering
   });
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {

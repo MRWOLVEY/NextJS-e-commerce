@@ -2,39 +2,46 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import z from "zod";
 
-const schema = z.object({
-  firstName: z.string().min(4, { message: "Minimum length is 4" }),
-  lastName: z.string().min(4, { message: "Minimum length is 4" }),
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(1, { message: "Email is required" }),
-  address: z.string().min(1, { message: "Address is required" }),
-  city: z.string().min(1, { message: "City is required" }),
-  postalCode: z.string().min(1, { message: "Postal code is required" }),
-  country: z.string().min(4, { message: "Minimum length is 4" }),
-  phone: z.string().regex(/^\+?[0-9]{10,15}$/, {
-    message: "Invalid phone number",
-  }),
-});
-
-type FormData = z.infer<typeof schema>;
-
-const onSubmit: SubmitHandler<FormData> = async (data) => {
-  console.log(data);
-};
+// Create schema function that uses translations
+const createSchema = (t: any) =>
+  z.object({
+    firstName: z.string().min(4, { message: t("min_length_4") }),
+    lastName: z.string().min(4, { message: t("min_length_4") }),
+    email: z
+      .string()
+      .email({ message: t("invalid_email") })
+      .min(1, { message: t("email_required") }),
+    address: z.string().min(1, { message: t("address_required") }),
+    city: z.string().min(1, { message: t("city_required") }),
+    postalCode: z.string().min(1, { message: t("postal_code_required") }),
+    country: z.string().min(4, { message: t("min_length_4") }),
+    phone: z.string().regex(/^\+?[0-9]{10,15}$/, {
+      message: t("invalid_phone"),
+    }),
+  });
 
 const Form = () => {
+  const t = useTranslations("Auth");
+  const schema = createSchema(t);
+  type FormData = z.infer<typeof schema>;
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, touchedFields },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    mode: "onBlur", // Validate on blur (less aggressive than onChange)
+    reValidateMode: "onChange", // Re-validate on change after first validation
+    delayError: 300, // Delay validation by 300ms to avoid flickering
   });
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log(data);
+  };
 
   return (
     <form
@@ -46,12 +53,12 @@ const Form = () => {
         <div className="flex-1">
           <input
             type="text"
-            placeholder="First Name"
+            placeholder={t("first_name")}
             {...register("firstName")}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
           {errors.firstName && (
-            <span className="text-red-500 text-sm">
+            <span className="text-red-500 text-sm mt-1 block">
               {errors.firstName.message}
             </span>
           )}
@@ -59,12 +66,12 @@ const Form = () => {
         <div className="flex-1">
           <input
             type="text"
-            placeholder="Last Name"
+            placeholder={t("last_name")}
             {...register("lastName")}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
           {errors.lastName && (
-            <span className="text-red-500 text-sm">
+            <span className="text-red-500 text-sm mt-1 block">
               {errors.lastName.message}
             </span>
           )}
@@ -75,12 +82,14 @@ const Form = () => {
       <div>
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t("email_address")}
           {...register("email")}
           className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
         />
         {errors.email && (
-          <span className="text-red-500 text-sm">{errors.email.message}</span>
+          <span className="text-red-500 text-sm mt-1 block">
+            {errors.email.message}
+          </span>
         )}
       </div>
 
@@ -88,12 +97,14 @@ const Form = () => {
       <div>
         <input
           type="text"
-          placeholder="Address"
+          placeholder={t("address")}
           {...register("address")}
           className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
         />
         {errors.address && (
-          <span className="text-red-500 text-sm">{errors.address.message}</span>
+          <span className="text-red-500 text-sm mt-1 block">
+            {errors.address.message}
+          </span>
         )}
       </div>
 
@@ -102,23 +113,25 @@ const Form = () => {
         <div className="flex-1">
           <input
             type="text"
-            placeholder="City"
+            placeholder={t("city")}
             {...register("city")}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
           {errors.city && (
-            <span className="text-red-500 text-sm">{errors.city.message}</span>
+            <span className="text-red-500 text-sm mt-1 block">
+              {errors.city.message}
+            </span>
           )}
         </div>
         <div className="flex-1">
           <input
             type="number"
-            placeholder="Postal Code"
+            placeholder={t("postal_code")}
             {...register("postalCode")}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
           {errors.postalCode && (
-            <span className="text-red-500 text-sm">
+            <span className="text-red-500 text-sm mt-1 block">
               {errors.postalCode.message}
             </span>
           )}
@@ -129,12 +142,14 @@ const Form = () => {
       <div>
         <input
           type="text"
-          placeholder="Country"
+          placeholder={t("country")}
           {...register("country")}
           className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
         />
         {errors.country && (
-          <span className="text-red-500 text-sm">{errors.country.message}</span>
+          <span className="text-red-500 text-sm mt-1 block">
+            {errors.country.message}
+          </span>
         )}
       </div>
 
@@ -142,16 +157,27 @@ const Form = () => {
       <div>
         <input
           type="tel"
-          placeholder="Phone Number"
+          placeholder={t("phone_number")}
           {...register("phone")}
           className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
         />
         {errors.phone && (
-          <span className="text-red-500 text-sm">{errors.phone.message}</span>
+          <span className="text-red-500 text-sm mt-1 block">
+            {errors.phone.message}
+          </span>
         )}
       </div>
 
       {/* Submit Button */}
+      <div>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-black text-white py-2 px-4 rounded hover:bg-gray-800 transition-colors disabled:opacity-50"
+        >
+          {isSubmitting ? "Submitting..." : "Submit"}
+        </button>
+      </div>
     </form>
   );
 };

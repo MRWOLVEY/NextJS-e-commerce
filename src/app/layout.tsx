@@ -8,6 +8,7 @@ import { generateOrganizationSchema } from "@/utils/seo";
 
 import ShopContextProvider from "@/context/ShopContext";
 
+// Default metadata - will be enhanced per page with generateMetadata
 export const metadata: Metadata = {
   title: {
     template: "%s | Premium Fashion Store",
