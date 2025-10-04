@@ -6,7 +6,7 @@ import Title from "@/components/Title";
 import { useAssets, useProducts } from "@/hooks/useApi";
 import CartTotal from "@/components/CartTotal";
 import { useRouter } from "next/navigation";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 type CartItem = {
   [size: string]: number;
@@ -17,7 +17,7 @@ type CartState = {
 };
 
 const Cart = () => {
-  const t = useTranslations('Wishlist');
+  const t = useTranslations("Wishlist");
   const { state, dispatch, actions } = useContext(ShopContext) as unknown as {
     state: {
       wishlist: CartState;
