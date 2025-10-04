@@ -26,8 +26,6 @@ export default function Page() {
   const t = useTranslations("HomePage");
   return (
     <div className=" flex flex-col h-fit">
-      {/* navbar */}
-      {/* body */}
       <div className="Body flex flex-col gap-10 py-10 flex-auto">
         <Hero />
         <h1 className="flex justify-center text-3xl sm:text-5xl text-neutral-500 uppercase font-stretch-expanded tracking-widest font-medium border-b-2 pb-2 border-b-neutral-300">
@@ -40,7 +38,6 @@ export default function Page() {
         <BestSellers />
         <OurPolicy />
       </div>
-      {/* footer */}
     </div>
   );
 }

@@ -5,13 +5,12 @@ import { ShopContext } from "@/context/ShopContext";
 import Title from "@/components/Title";
 import { useTranslations, useLocale } from "next-intl";
 import { getProductName } from "@/utils/productHelpers";
-import { assets } from "@/data/assets";
+import { useAssets, useProducts } from "@/hooks/useApi";
 import CartTotal from "@/components/CartTotal";
 import { useRouter } from "next/navigation";
-import { products } from "@/data/products";
 
 type CartItem = {
-  [size: string]: number; // size is a string, value is quantity
+  [size: string]: number;
 };
 
 type CartState = {
@@ -24,6 +23,8 @@ const Cart = () => {
     dispatch: Function;
     actions: any;
   };
+  const { products, loading: productsLoading } = useProducts();
+  const { assets, loading: assetsLoading } = useAssets();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const locale = useLocale();
@@ -39,11 +40,13 @@ const Cart = () => {
   };
 
   const cartData = useMemo(() => {
+    if (!products || productsLoading) return [];
+
     const result: any[] = [];
     Object.keys(state.cart).forEach((key: string) => {
       Object.keys(state.cart[key]).forEach((size: string) => {
         if (size !== "total") {
-          const product = products.find((p) => p._id === key);
+          const product = products.find((p: any) => p._id === key);
           if (product) {
             result.push({
               id: key,
@@ -56,7 +59,7 @@ const Cart = () => {
       });
     });
     return result;
-  }, [state.cart, products]);
+  }, [state.cart, products, productsLoading]);
 
   useEffect(() => {
     getTotal(cartData);
@@ -75,7 +78,6 @@ const Cart = () => {
           </div>
         ) : null}
         {cartData.map((item, index) => {
-          // console.log('item', item)
           return (
             <div
               key={index}
@@ -125,7 +127,7 @@ const Cart = () => {
                   })
                 }
                 className="w-4 mr-4 sm:w-5 cursor-pointer"
-                src={assets.bin_icon}
+                src={assets?.bin_icon || "/images/bin_icon.png"}
                 alt=""
               />
             </div>

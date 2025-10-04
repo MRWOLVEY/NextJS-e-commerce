@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useContext, useState } from "react";
 import { ShopContext } from "@/context/ShopContext";
-import { assets } from "@/data/assets";
-import { products } from "@/data/products";
+import { useProduct, useAssets } from "@/hooks/useApi";
 import { usePathname } from "next/navigation";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -16,41 +15,30 @@ import { Product as ProductsType } from "@/data/products";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-// import RelatedProducts from "../components/RelatedProducts";
-// import { toast } from "react-toastify";
-
 const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
   const { productId } = React.use(params);
   const { state, dispatch, actions } = useContext(ShopContext);
   const locale = useLocale();
   const t = useTranslations("Product");
-  const [productData, setProductData] = useState<ProductsType | null>(null);
-  const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(false);
+
+  const {
+    product: productData,
+    relatedProducts,
+    loading,
+    error,
+  } = useProduct(productId);
+  const { assets, loading: assetsLoading } = useAssets();
+
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
   const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([]);
-  // const location = usePathname();
 
   const skeletonImages = Array.from({ length: 4 }, (_, i) => i + 1);
 
-  //   const fetchProduct = async () => {
-  //     setLoading(true);
-  //     setError(false);
-  //     products.map((item) => {
-  //
-  //     });
-  //     setLoading(false);
-  //   };
-
   useEffect(() => {
-    const product = products.find((item) => item._id === productId);
+    if (productData && !loading) {
+      setImage(productData.image[0]);
 
-    if (product) {
-      setProductData(product);
-      setImage(product.image[0]);
-
-      // Generate breadcrumbs based on actual site structure
       const getCategoryName = (type: string) => {
         if (type === "apparel") {
           return locale === "ar" ? "الملابس" : "Apparel";
@@ -63,33 +51,24 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
       const breadcrumbItems: BreadcrumbItem[] = [
         { name: locale === "ar" ? "الرئيسية" : "Home", url: "/" },
         {
-          name: getCategoryName(product.type),
-          url: `/category/${product.type}`,
+          name: getCategoryName(productData.type),
+          url: `/category/${productData.type}`,
         },
-        { name: getProductName(product, locale), url: `/product/${productId}` },
+        {
+          name: getProductName(productData, locale),
+          url: `/product/${productId}`,
+        },
       ];
       setBreadcrumbs(breadcrumbItems);
-
-      setLoading(false);
-    } else {
-      // Product not found, trigger 404
-      setLoading(false);
+    } else if (error) {
       notFound();
     }
-  }, [productId, products, locale]);
-
-  //   useEffect(() => {
-  //     setSize("");
-  //   }, [location]);
-
-  // useEffect(() => {
-  //   console.log('state', state)
-  // }, [state])
+  }, [productData, loading, error, locale, productId]);
 
   const [isAdding, setIsAdding] = useState(false);
 
   const handleAddToCart = async (data: any, size: any) => {
-    if (isAdding) return; // Prevent double clicks
+    if (isAdding) return;
 
     setIsAdding(true);
     console.log("Adding to cart:", data._id, size);
@@ -101,7 +80,6 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
       });
     }
 
-    // Reset after 500ms
     setTimeout(() => setIsAdding(false), 500);
   };
   const handleAddToWhishlist = (data: any, size: any) => {
@@ -110,8 +88,7 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
           type: actions.addToWishlist,
           payload: { id: data._id, price: data.price, size: size },
         })
-      : //   : toast.error("Please select a size");
-        null;
+      : null;
   };
 
   return loading ? (
@@ -130,15 +107,12 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
     </div>
   ) : productData ? (
     <div className="pt-10 transition-opacity ease-in duration-500 opacity-100">
-      {/* Breadcrumbs */}
       <Breadcrumb items={breadcrumbs} className="mb-6" />
 
-      {/* product data */}
       <div className="flex gap-12 flex-col sm:flex-row">
-        {/* product image */}
         <div className="flex flex-1 pt-4 flex-col-reverse gap-3 sm:flex-row">
           <div className="flex sm:flex-col hide-scrollbar overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
-            {productData.image.map((item, index) => (
+            {productData.image.map((item: string, index: number) => (
               <Image
                 alt={getProductName(productData, locale)}
                 width={500}
@@ -151,30 +125,53 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
             ))}
           </div>
           <div className="w-full h-full sm:w-[80%]">
-            <Image
-              alt={getProductName(productData, locale)}
-              src={image}
-              width={500}
-              height={500}
-              className="w-full h-auto"
-            />
+            {image ? (
+              <Image
+                alt={getProductName(productData, locale)}
+                src={image}
+                width={500}
+                height={500}
+                className="w-full h-auto"
+              />
+            ) : (
+              <div
+                className="w-full h-auto bg-gray-200 animate-pulse rounded"
+                style={{ aspectRatio: "1/1" }}
+              >
+                <div className="flex items-center justify-center h-full text-gray-400">
+                  Loading...
+                </div>
+              </div>
+            )}
           </div>
         </div>
-        {/* product details */}
+
         <div className="flex-1">
           <h1 className="font-medium text-2xl mt-2">
             {getProductName(productData, locale)}
           </h1>
           <div className="flex items-center gap-1 mt-1">
-            {/* rating stars and count */}
-            <img src={assets.star_icon} alt="" className="w-3" />
-            <img src={assets.star_icon} alt="" className="w-3" />
-            <img src={assets.star_icon} alt="" className="w-3" />
-            <img src={assets.star_icon} alt="" className="w-3" />
-            <img src={assets.star_icon} alt="" className="w-3" />
+            {assets?.star_icon ? (
+              <>
+                <img src={assets.star_icon} alt="" className="w-3" />
+                <img src={assets.star_icon} alt="" className="w-3" />
+                <img src={assets.star_icon} alt="" className="w-3" />
+                <img src={assets.star_icon} alt="" className="w-3" />
+                <img src={assets.star_icon} alt="" className="w-3" />
+              </>
+            ) : (
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div
+                    key={i}
+                    className="w-3 h-3 bg-yellow-400 rounded-full"
+                  ></div>
+                ))}
+              </div>
+            )}
             <p className="pls-2">{t("rating_count")}</p>
           </div>
-          {/* currency and price */}
+
           <p className="mt-2 text-2xl font-medium">${productData.price}</p>
           <p className="mt-2 text-gray-500 md:w-4/5">
             {getProductDescription(productData, locale)}
@@ -222,28 +219,7 @@ const Product = ({ params }: { params: Promise<{ productId: string }> }) => {
           </div>
         </div>
       </div>
-      {/* description and review */}
-      {/* <div className="mt-20">
-        <div className="flex">
-          <b className="border px-5 py-3 text-sm">Description</b>
-          <p className="border px-5 py-3 text-sm">Reviews (122)</p>
-        </div>
-        <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos iure,
-            ipsam beatae obcaecati atque mollitia dolores temporibus incidunt
-            cupiditate distinctio ea asperiores necessitatibus esse eos vero
-            quas molestiae fugit consequatur.
-          </p>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum
-            consectetur quo consequuntur! Nobis eaque, odio, nam dolores
-            quibusdam totam, maxime atque facere non error accusamus molestiae
-            corporis quae placeat? Sequi.
-          </p>
-        </div>
-      </div> */}
-      {/* realated products */}
+
       <RelatedProducts
         category={productData.category}
         subCategory={productData.subCategory}

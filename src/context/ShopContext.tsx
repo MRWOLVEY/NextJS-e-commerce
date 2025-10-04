@@ -8,12 +8,11 @@ import { set } from "zod";
 export const ShopContext = createContext({} as values);
 
 const ShopContextProvider = ({ children }: { children: React.ReactNode }) => {
-  // Check if we're in the browser environment before accessing document.cookie
   const checkCookieAuth = () => {
     if (typeof window !== "undefined") {
       return document.cookie.includes("token=loggedin");
     }
-    return false; // Default to false during SSR
+    return false;
   };
 
   const initialState = {
@@ -22,7 +21,7 @@ const ShopContextProvider = ({ children }: { children: React.ReactNode }) => {
     wishlistProductsCount: 0,
     wishlist: {},
     total: 0,
-    isLoggedIn: false, // Always start with false for SSR consistency
+    isLoggedIn: false,
     user: null,
   };
   const actions = {
@@ -40,11 +39,8 @@ const ShopContextProvider = ({ children }: { children: React.ReactNode }) => {
     logout: "LOGOUT",
   };
 
-  // Define types for state and action
-
   const [state, dispatch] = useReducer<any, any>(reducer, initialState);
 
-  // Update auth state after component mounts to ensure client/server consistency
   useEffect(() => {
     const isLoggedIn = checkCookieAuth();
     if (state.isLoggedIn !== isLoggedIn) {

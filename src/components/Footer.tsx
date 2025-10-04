@@ -1,12 +1,18 @@
 "use client";
 import React from "react";
-import { assets } from "@/data/assets";
+import { useAssets } from "@/hooks/useApi";
 import Link from "next/link";
 const Footer = () => {
+  const { assets, loading } = useAssets();
+
   return (
     <div className="h-fit flex flex-col sm:flex-row gap-1 text-sm p-10 bg-black text-white">
       <div className="flex-3">
-        <img src={assets.logo} alt="logo" className="mb-5 w-32 invert" />
+        <img
+          src={assets?.logo || "/images/logo.png"}
+          alt="logo"
+          className="mb-5 w-32 invert"
+        />
         <p className="w-full md:w-2/3 text-gray-200">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi nam
           voluptate cum facilis quia, eos assumenda distinctio est neque,

@@ -2,12 +2,13 @@
 import React from "react";
 import { useContext } from "react";
 import { ShopContext } from "@/context/ShopContext";
-import { assets } from "@/data/assets";
+import { useAssets } from "@/hooks/useApi";
 import { usePathname } from "next/navigation";
 
 function SearchBar() {
   const { search, setSearch, showSearch, setShowSearch } =
     useContext(ShopContext);
+  const { assets, loading } = useAssets();
   const pathname = usePathname();
 
   return showSearch && pathname.includes("/category") ? (
@@ -20,10 +21,9 @@ function SearchBar() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        {/* <img src={assets.search_icon} className="inline w-5 cursor-pointer" alt="" /> */}
       </div>
       <img
-        src={assets.cross_icon}
+        src={assets?.cross_icon || "/images/cross_icon.png"}
         className="inline w-3 cursor-pointer"
         onClick={() => setShowSearch(false)}
         alt=""

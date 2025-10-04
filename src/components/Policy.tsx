@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { assets } from "@/data/assets";
+import { useAssets } from "@/hooks/useApi";
 import { useTranslations } from "next-intl";
 
 const OurPolicy = () => {
   const t = useTranslations("Policy");
+  const { assets, loading } = useAssets();
 
   return (
     <div
@@ -13,7 +14,7 @@ const OurPolicy = () => {
     >
       <div>
         <img
-          src={assets.exchange_icon}
+          src={assets?.exchange_icon || "/images/exchange_icon.png"}
           alt="exchange"
           className="w-12 m-auto mb-5"
         />
@@ -22,7 +23,7 @@ const OurPolicy = () => {
       </div>
       <div>
         <img
-          src={assets.quality_icon}
+          src={assets?.quality_icon || "/images/quality_icon.png"}
           alt="return"
           className="w-12 m-auto mb-5"
         />
@@ -31,7 +32,7 @@ const OurPolicy = () => {
       </div>
       <div>
         <img
-          src={assets.support_img}
+          src={assets?.support_img || "/images/support_img.png"}
           alt="support"
           className="w-12 m-auto mb-5"
         />

@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useMemo } from "react";
 import { ShopContext } from "@/context/ShopContext";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/useApi";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { getProductName } from "@/utils/productHelpers";
@@ -15,6 +15,7 @@ const ReviewOrderModal = ({
   setConfirmed: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { state, dispatch } = useContext(ShopContext);
+  const { products, loading } = useProducts();
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("OrderReview");
@@ -24,7 +25,7 @@ const ReviewOrderModal = ({
   };
 
   const handleChildClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevents the click from bubbling up to the parent div
+    e.stopPropagation();
   };
 
   const handleConfirm = (e: React.MouseEvent) => {
@@ -36,15 +37,14 @@ const ReviewOrderModal = ({
     }, 5000);
   };
 
-  // Map through cart items and create list with product details
   const cartItemsList = useMemo(() => {
+    if (!products || loading) return [];
+
     const items = Object.entries(state.cart).map(([productId, sizeData]) => {
-      // Find the product from products array
-      const product = products.find((p) => p._id === productId);
+      const product = products.find((p: any) => p._id === productId);
 
       if (!product) return null;
 
-      // Calculate total price for this product (all sizes combined)
       const totalPrice = Object.entries(sizeData).reduce(
         (total, [size, count]) => {
           return total + product.price * count;
@@ -56,17 +56,16 @@ const ReviewOrderModal = ({
         id: productId,
         name: getProductName(product, locale),
         image: product.image[0],
-        sizeCount: sizeData, // Object with size as key and count as value
+        sizeCount: sizeData,
         price: product.price,
         totalPrice: totalPrice,
       };
     });
 
-    // Filter out null entries and return typed array
     return items.filter(
       (item): item is NonNullable<typeof item> => item !== null
     );
-  }, [state.cart]);
+  }, [state.cart, products, loading, locale]);
 
   useEffect(() => {
     console.log("state in review order modal", state);
@@ -94,7 +93,6 @@ const ReviewOrderModal = ({
                   key={item.id}
                   className="flex gap-3 bg-white p-3 rounded-lg shadow-sm cursor-pointer"
                 >
-                  {/* Product Image */}
                   <div className="flex-shrink-0 flex items-center">
                     <img
                       src={item.image}
@@ -103,7 +101,6 @@ const ReviewOrderModal = ({
                     />
                   </div>
 
-                  {/* Product Details */}
                   <div className="flex-grow">
                     <h4 className="font-medium text-sm mb-1 line-clamp-2">
                       {item.name}
@@ -112,7 +109,6 @@ const ReviewOrderModal = ({
                       ${item.price} {t("each")}
                     </p>
 
-                    {/* Size and Count Details */}
                     <div className="flex justify-between gap-2 mb-2">
                       <div className="flex flex-wrap gap-2">
                         {Object.entries(item.sizeCount).map(([size, count]) => (
@@ -128,8 +124,6 @@ const ReviewOrderModal = ({
                         Total: ${item.totalPrice}
                       </p>
                     </div>
-
-                    {/* Total Price for this product */}
                   </div>
                 </div>
               ))

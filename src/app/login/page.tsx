@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ShopContext } from "@/context/ShopContext";
 
-// Create validation schema with translations
 const createLoginSchema = (t: any) =>
   z.object({
     email: z
@@ -30,9 +29,9 @@ const LoginPage = () => {
     formState: { errors, isSubmitting, touchedFields },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    mode: "onBlur", // Validate on blur (less aggressive than onChange)
-    reValidateMode: "onChange", // Re-validate on change after first validation
-    delayError: 300, // Delay validation by 300ms to avoid flickering
+    mode: "onBlur",
+    reValidateMode: "onChange",
+    delayError: 300,
   });
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
@@ -60,7 +59,6 @@ const LoginPage = () => {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Email Field */}
             <div>
               <label
                 htmlFor="email"
@@ -82,7 +80,6 @@ const LoginPage = () => {
               )}
             </div>
 
-            {/* Password Field */}
             <div>
               <label
                 htmlFor="password"
@@ -104,7 +101,6 @@ const LoginPage = () => {
               )}
             </div>
 
-            {/* Submit Button */}
             <div>
               <button
                 type="submit"
@@ -141,7 +137,6 @@ const LoginPage = () => {
               </button>
             </div>
 
-            {/* Root Error */}
             {errors.root && (
               <div className="text-center">
                 <p className="text-sm text-red-600">{errors.root.message}</p>

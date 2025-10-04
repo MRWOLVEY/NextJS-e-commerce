@@ -7,25 +7,20 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 import Image from "next/image";
-import { assets } from "@/data/assets";
+import { useAssets } from "@/hooks/useApi";
 import TextType from "./text-type/TextType";
 import { useTranslations } from "next-intl";
 
 const Hero = () => {
   const router = useRouter();
   const t = useTranslations("Hero");
+  const { assets, loading: assetsLoading } = useAssets();
   const [loading, setLoading] = useState<boolean>(false);
-  // useEffect(() => {
-  //   const timer: NodeJS.Timeout = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-  //   return () => clearTimeout(timer);
-  // });
+
   return (
     <div
       className={`flex flex-col-reverse sm:flex-row border border-gray-400 `}
     >
-      {/* hero left side */}
       <div className="w-full sm:w-1/2 flex flex-col gap-1 items-center justify-center py-10 sm:py-0">
         <div className="text-[#414141]">
           <TextType
@@ -49,7 +44,7 @@ const Hero = () => {
           </button>
         </div>
       </div>
-      {/* RIGHT SIDE */}
+
       <div className="w-full sm:w-1/2">
         {loading && (
           <Skeleton
@@ -61,7 +56,7 @@ const Hero = () => {
         {!loading && (
           <Image
             className="w-full h-full object-cover"
-            src={assets.hero_img}
+            src={assets?.hero_img || "/images/hero_img.png"}
             alt="hero"
             width={500}
             height={500}

@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { assets } from "@/data/assets";
-import { products, Product } from "@/data/products";
+import { Product } from "@/data/products";
 
 const CategoryProduct = ({ product }: { product: Product }) => {
   return (

@@ -1,28 +1,27 @@
 "use client";
 import React, { useState, useContext, useEffect } from "react";
-// import { ShopContext } from "@/context/ShopContext";
+
 import Title from "@/components/Title";
 import ProductItem from "@/components/ProductItem";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/useApi";
 import { useTranslations, useLocale } from "next-intl";
 import { getProductName } from "@/utils/productHelpers";
 
 function RelatedProducts({ category, subCategory }) {
-  //   const { products } = useContext(ShopContext);
+  const { products, loading, error } = useProducts();
   const [related, setRelated] = useState([]);
   const t = useTranslations("RelatedProducts");
   const locale = useLocale();
 
   useEffect(() => {
-    if (products.length > 0) {
-      // Filter products based on category and subCategory
+    if (products && products.length > 0) {
       let relatedProducts = [];
       relatedProducts = products.filter((item) => {
         return item.category === category && item.subCategory === subCategory;
       });
-      setRelated(relatedProducts.slice(0, 5)); // Limit to 5 related products
+      setRelated(relatedProducts.slice(0, 5));
     }
-  }, [products]);
+  }, [products, category, subCategory]);
   return (
     <div className="my-24">
       <div className="text-center text-3xl py-2">

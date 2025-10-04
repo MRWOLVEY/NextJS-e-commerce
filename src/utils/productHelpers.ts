@@ -31,7 +31,7 @@ export const searchProducts = (
   return products.filter(
     (product) =>
       product.name_en.toLowerCase().includes(lowerSearchTerm) ||
-      product.name_ar.includes(searchTerm) // Arabic search might be case-sensitive
+      product.name_ar.includes(searchTerm)
   );
 };
 

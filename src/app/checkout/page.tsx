@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import Title from "@/components/Title";
 import CartTotal from "@/components/CartTotal";
 import { useTranslations } from "next-intl";
-import { assets } from "@/data/assets";
+import { useAssets } from "@/hooks/useApi";
 import { ShopContext } from "@/context/ShopContext";
 import { useRouter } from "next/navigation";
 import Form from "@/components/Form";
@@ -16,6 +16,7 @@ const PlaceOrder = () => {
   const [method, setMethod] = useState("stripe");
   const [showModal, setShowModal] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
+  const { assets, loading } = useAssets();
   const router = useRouter();
   const t = useTranslations("Checkout");
   const productT = useTranslations("Product");
@@ -27,9 +28,7 @@ const PlaceOrder = () => {
     <div>
       {!confirmed ? (
         <div className="checkout flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh]">
-          {/* left side */}
           <Form />
-          {/* right side */}
           <div className="mt-8">
             <div className="mt-8 min-w-80">
               <CartTotal />
@@ -40,7 +39,7 @@ const PlaceOrder = () => {
                 t2={t("payment_method").split(" ")[1]}
               />
             </div>
-            {/* paymnet methods selection */}
+
             <div className="flex gap-3 flex-col lg:flex-row">
               <div
                 onClick={() => setMethod("stripe")}
@@ -51,7 +50,11 @@ const PlaceOrder = () => {
                     method === "stripe" ? "bg-green-500 border-gray-400" : ""
                   }`}
                 ></p>
-                <img className="h-5 mx-4" src={assets.stripe_logo} alt="" />
+                <img
+                  className="h-5 mx-4"
+                  src={assets?.stripe_logo || "/images/stripe_logo.png"}
+                  alt=""
+                />
               </div>
               <div
                 onClick={() => setMethod("vadafone")}
@@ -62,7 +65,11 @@ const PlaceOrder = () => {
                     method === "vadafone" ? "bg-green-500 border-gray-400" : ""
                   }`}
                 ></p>
-                <img className="h-5 mx-4" src={assets.vadafone_logo} alt="" />
+                <img
+                  className="h-5 mx-4"
+                  src={assets?.vadafone_logo || "/images/vadafone_logo.png"}
+                  alt=""
+                />
               </div>
               <div
                 onClick={() => setMethod("cod")}
@@ -81,7 +88,6 @@ const PlaceOrder = () => {
             <div className="w-full text-end mt-8">
               <button
                 onClick={() => {
-                  // router.push("/orders");
                   setShowModal(true);
                 }}
                 className="bg-black hover:opacity-85 text-white text-xs my-5 px-8 py-3 active:bg-gray-700 rounded-sm shadow-lg shadow-gray-200 uppercase transition-all duration-100"

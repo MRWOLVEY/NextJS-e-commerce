@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { assets } from "@/data/assets";
-import { products, Product } from "@/data/products";
+import { useAssets, useProducts } from "@/hooks/useApi";
+import { Product } from "@/data/products";
 import CategoryProduct from "./CategoryProduct";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -15,25 +15,40 @@ const Categories = () => {
 
   const router = useRouter();
   const t = useTranslations("Categories");
+  const { products, loading: productsLoading } = useProducts();
+  const { assets, loading: assetsLoading } = useAssets();
   const [apparels, setApparels] = useState<Product[]>([]);
 
-  const categories: Category[] = [
-    {
-      name: t("apparels"),
-      imageUrl: assets.apparel_bg,
-      url: "/category/apparel",
-    },
-    {
-      name: t("glasses"),
-      imageUrl: assets.glasses_bg,
-      url: "/category/glasses",
-    },
-  ];
+  const categories: Category[] = assets
+    ? [
+        {
+          name: t("apparels"),
+          imageUrl: assets.apparel_bg,
+          url: "/category/apparel",
+        },
+        {
+          name: t("glasses"),
+          imageUrl: assets.glasses_bg,
+          url: "/category/glasses",
+        },
+      ]
+    : [];
 
   useEffect(() => {
-    const items = products.filter((item) => item.type === "apparel");
-    setApparels(items.slice(0, 6));
-  }, []);
+    if (products && products.length > 0) {
+      const items = products.filter((item: Product) => item.type === "apparel");
+      setApparels(items.slice(0, 6));
+    }
+  }, [products]);
+  if (assetsLoading) {
+    return (
+      <div className="flex flex-col sm:flex-row gap-4 w-full">
+        <div className="rounded flex-1 bg-gray-200 animate-pulse min-h-40"></div>
+        <div className="rounded flex-1 bg-gray-200 animate-pulse min-h-40"></div>
+      </div>
+    );
+  }
+
   return (
     <div className=" flex flex-col sm:flex-row gap-4 w-full ">
       {categories.map((cat, i) => (

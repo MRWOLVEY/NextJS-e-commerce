@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { useTranslations } from "next-intl";
-import { assets } from "@/data/assets";
+import { useAssets } from "@/hooks/useApi";
 
 interface FiltersProps {
   showFilter: boolean;
@@ -24,14 +24,14 @@ const Filters = ({
   subcategories,
 }: FiltersProps) => {
   const t = useTranslations("Filters");
+  const { assets, loading } = useAssets();
 
   return (
-    // <div>
     <div className="min-w-60 h-fit transition duration-100 ease-in-out">
       <p className="my-2 text-xl flex items-center gap-2 cursor-pointer">
         {t("filters").toUpperCase()}
         <img
-          src={assets.dropdown_icon}
+          src={assets?.dropdown_icon || "/images/dropdown_icon.png"}
           alt=""
           className={classNames(
             "h-3 sm:hidden transition duration-100 ease-in-out cursor-pointer",
@@ -42,7 +42,7 @@ const Filters = ({
           onClick={() => setShowFilter(!showFilter)}
         />
       </p>
-      {/* category filter */}
+
       <div
         className={classNames(
           "transition duration-300 ease-in-out h-100 overflow-hidden opacity-100",
@@ -68,7 +68,7 @@ const Filters = ({
               ))}
           </div>
         </div>
-        {/* subcategory filter */}
+
         <div
           className={classNames("border border-gray-300 pl-5 py-3 my-5", {
             "": !showFilter,
@@ -119,7 +119,6 @@ const Filters = ({
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 

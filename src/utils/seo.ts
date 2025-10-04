@@ -21,13 +21,11 @@ export function generateMetadata(
     description: seoConfig.description,
     keywords: seoConfig.keywords,
 
-    // Basic SEO
     robots: seoConfig.noindex ? "noindex,nofollow" : "index,follow",
     alternates: {
       canonical: currentUrl,
     },
 
-    // Open Graph (Facebook, LinkedIn, etc.)
     openGraph: {
       title: seoConfig.title,
       description: seoConfig.description,
@@ -46,7 +44,6 @@ export function generateMetadata(
       type: "website",
     },
 
-    // Twitter Card
     twitter: {
       card: "summary_large_image",
       title: seoConfig.title,
@@ -54,9 +51,8 @@ export function generateMetadata(
       images: [seoConfig.ogImage || `${baseUrl}/images/og-default.jpg`],
     },
 
-    // Additional meta tags
     other: {
-      "theme-color": "#f59e0b", // Amber color from your design
+      "theme-color": "#f59e0b",
       "msapplication-TileColor": "#f59e0b",
       "apple-mobile-web-app-capable": "yes",
       "apple-mobile-web-app-status-bar-style": "default",
@@ -75,7 +71,6 @@ export function generateHreflangLinks(
     hreflangs[locale] = `${baseUrl}/${locale}${currentPath}`;
   });
 
-  // Add x-default for international users
   hreflangs["x-default"] = `${baseUrl}/en${currentPath}`;
 
   return hreflangs;
@@ -94,7 +89,7 @@ export function generateProductSchema(product: any, locale: string = "en") {
       ? product.image.map((img: string) => `${baseUrl}${img}`)
       : [],
     sku: product._id,
-    mpn: product._id, // Manufacturer Part Number
+    mpn: product._id,
     brand: {
       "@type": "Brand",
       name: locale === "ar" ? "متجر الأزياء المميز" : "Premium Fashion Store",
@@ -117,7 +112,7 @@ export function generateProductSchema(product: any, locale: string = "en") {
       },
       priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
         .toISOString()
-        .split("T")[0], // 1 year from now
+        .split("T")[0],
     },
     aggregateRating: {
       "@type": "AggregateRating",

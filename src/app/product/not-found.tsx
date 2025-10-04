@@ -3,17 +3,17 @@ import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import Title from "@/components/Title";
 import ProductItem from "@/components/ProductItem";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/useApi";
 import { getProductName } from "@/utils/productHelpers";
 
 export default function ProductNotFound() {
   const t = useTranslations("Error");
   const locale = useLocale();
+  const { products, loading } = useProducts();
 
-  // Show some featured products as alternatives
   const featuredProducts = products
-    .filter((product) => product.bestseller)
-    .slice(0, 4);
+    ? products.filter((product) => product.bestseller).slice(0, 4)
+    : [];
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
@@ -50,7 +50,6 @@ export default function ProductNotFound() {
         </Link>
       </div>
 
-      {/* Alternative Products */}
       {featuredProducts.length > 0 && (
         <div className="w-full max-w-6xl">
           <h3 className="text-xl font-semibold mb-6">{t("you_might_like")}</h3>

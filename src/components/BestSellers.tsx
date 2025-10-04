@@ -1,40 +1,37 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-// import { ShopContext } from "../contexts/ShopContext";
-// import Title from "./Title";
+import React from "react";
 import ProductItem from "@/components/ProductItem";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/useApi";
 import CardSkeleton from "./CardSkeleton";
 
 const BestSellers = () => {
-  interface Product {
-    _id: string;
-    name_en: string;
-    name_ar: string;
-    price: number;
-    image: string[];
-    category: string;
-    subCategory: string;
-    bestseller: boolean;
-    [key: string]: any;
-  }
-  //   const { products } = useContext(ShopContext);
-  const [BestSellers, setBestSellers] = useState<Product[]>([]);
+  const {
+    products: bestSellers,
+    loading,
+    error,
+  } = useProducts({
+    bestseller: true,
+    limit: 10,
+  });
 
   const skeletonCards = Array.from({ length: 10 }, (_, i) => i + 1);
 
-  useEffect(() => {
-    const BestSellers = products.filter((item) => (item.bestseller = true));
-    setBestSellers(BestSellers.slice(12, 23));
-  }, []);
+  if (error) {
+    return (
+      <div className="my-10 text-center">
+        <p className="text-red-500">Error loading bestsellers: {error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="my-10">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
-        {BestSellers.length === 0
+        {loading || bestSellers.length === 0
           ? skeletonCards.map((card) => <CardSkeleton key={card} />)
-          : BestSellers.map((product, index) => (
+          : bestSellers.map((product: any, index: number) => (
               <ProductItem
-                key={index}
+                key={product._id || index}
                 _id={product._id}
                 image={product.image}
                 name_en={product.name_en}

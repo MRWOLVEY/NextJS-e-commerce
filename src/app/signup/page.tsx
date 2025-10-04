@@ -6,7 +6,6 @@ import { z } from "zod";
 import { useTranslations } from "next-intl";
 import { ShopContext } from "@/context/ShopContext";
 
-// Create validation schema with translations
 const createRegistrationSchema = (t: any) =>
   z.object({
     name: z.string().min(2, { message: t("min_length_2") }),
@@ -34,9 +33,9 @@ const SignupPage = () => {
     formState: { errors, isSubmitting, touchedFields },
   } = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
-    mode: "onBlur", // Validate on blur (less aggressive than onChange)
-    reValidateMode: "onChange", // Re-validate on change after first validation
-    delayError: 300, // Delay validation by 300ms to avoid flickering
+    mode: "onBlur",
+    reValidateMode: "onChange",
+    delayError: 300,
   });
 
   const onSubmit: SubmitHandler<RegistrationFormData> = async (data) => {
@@ -66,7 +65,6 @@ const SignupPage = () => {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Name Field */}
             <div>
               <label
                 htmlFor="name"
@@ -88,7 +86,6 @@ const SignupPage = () => {
               )}
             </div>
 
-            {/* Email Field */}
             <div>
               <label
                 htmlFor="email"
@@ -110,7 +107,6 @@ const SignupPage = () => {
               )}
             </div>
 
-            {/* Password Field */}
             <div>
               <label
                 htmlFor="password"
@@ -132,7 +128,6 @@ const SignupPage = () => {
               )}
             </div>
 
-            {/* Submit Button */}
             <div>
               <button
                 type="submit"
@@ -169,7 +164,6 @@ const SignupPage = () => {
               </button>
             </div>
 
-            {/* Root Error */}
             {errors.root && (
               <div className="text-center">
                 <p className="text-sm text-red-600">{errors.root.message}</p>

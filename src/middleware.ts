@@ -18,7 +18,6 @@ export default async function middleware(req: NextRequest) {
     !!(token && token !== "")
   );
 
-  // Check if user has valid token (not empty)
   const isLoggedIn = token && token !== "";
 
   if (isProtectedRoute && !isLoggedIn) {
@@ -34,7 +33,6 @@ export default async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// This config tells Next.js which routes to apply the middleware to
 export const config = {
   matcher: [
     /*

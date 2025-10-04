@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useContext, useEffect } from "react";
-import { assets } from "@/data/assets";
+import { useAssets } from "@/hooks/useApi";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShopContext } from "@/context/ShopContext";
@@ -9,7 +9,7 @@ import { useLocale, useTranslations } from "next-intl";
 
 const setLocaleCookie = (locale: string) => {
   const expires = new Date();
-  expires.setTime(expires.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 year
+  expires.setTime(expires.getTime() + 365 * 24 * 60 * 60 * 1000);
   document.cookie = `locale=${locale}; path=/; expires=${expires.toUTCString()}`;
 };
 
@@ -17,6 +17,7 @@ const Navbar = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [showCats, setShowCats] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
+  const { assets, loading: assetsLoading } = useAssets();
   const { state, setShowSearch, dispatch } = useContext(ShopContext);
   const pathname: string = usePathname();
   const router = useRouter();
@@ -39,7 +40,11 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-around py-4 font-medium border-b-2 mb-2">
       <Link href={"/"}>
-        <img src={assets.logo} className="w-36 cursor-pointer" alt="logo" />
+        <img
+          src={assets?.logo || "/images/logo.png"}
+          className="w-36 cursor-pointer"
+          alt="logo"
+        />
       </Link>
       <ul className="hidden sm:flex gap-10 text-sm text-gray-700">
         <Link
@@ -85,7 +90,7 @@ const Navbar = () => {
         {/* {pathname.includes("/category") && (
           <img
             onClick={() => setShowSearch(true)}
-            src={assets.search_icon}
+            src={assets?.search_icon || '/images/search_icon.png'}
             className="w-5 cursor-pointer"
             alt="search"
           />
@@ -114,7 +119,7 @@ const Navbar = () => {
             onChange={(e) => {
               const selectedLocale = e.target.value;
               setLocaleCookie(selectedLocale);
-              router.refresh(); // Refresh to apply the new locale
+              router.refresh();
             }}
             className="outline-none bg-transparent text-sm cursor-pointer"
           >
@@ -133,7 +138,7 @@ const Navbar = () => {
         {mounted && !visible && state.isLoggedIn && (
           <div className="group hidden sm:block relative">
             <img
-              src={assets.profile_icon}
+              src={assets?.profile_icon || "/images/profile_icon.png"}
               alt="profile"
               className="w-5 cursor-pointer"
             />
@@ -159,13 +164,17 @@ const Navbar = () => {
           </div>
         )}
         <Link href="/cart" className="relative">
-          <img src={assets.cart_icon} className="w-5 min-w-5" alt="cart" />
+          <img
+            src={assets?.cart_icon || "/images/cart_icon.png"}
+            className="w-5 min-w-5"
+            alt="cart"
+          />
           <span className="absolute -right-1 -bottom-1 w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             {state.cartProductsCount}
           </span>
         </Link>
         <img
-          src={assets.menu_icon}
+          src={assets?.menu_icon || "/images/menu_icon.png"}
           alt="menu"
           className="w-5 cursor-pointer sm:hidden"
           onClick={() => setVisible(true)}
@@ -181,7 +190,11 @@ const Navbar = () => {
             className="flex items-center gap-4 p-3 bg-black cursor-pointer"
             onClick={() => setVisible(false)}
           >
-            <img src={assets.dropdown_icon} className="h-4 rotate-180" />
+            <img
+              src={assets?.dropdown_icon || "/images/dropdown_icon.png"}
+              className="h-4 rotate-180"
+              alt="dropdown icon"
+            />
             <p className="text-slate-100">{t("back")}</p>
           </div>
           <Link

@@ -6,7 +6,6 @@ import { z } from "zod";
 import { useTranslations } from "next-intl";
 import Title from "@/components/Title";
 
-// Create validation schema with translations
 const createContactSchema = (t: any) =>
   z.object({
     name: z
@@ -45,9 +44,9 @@ const ContactPage = () => {
     reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
-    mode: "onBlur", // Validate on blur (less aggressive than onChange)
-    reValidateMode: "onChange", // Re-validate on change after first validation
-    delayError: 300, // Delay validation by 300ms to avoid flickering
+    mode: "onBlur",
+    reValidateMode: "onChange",
+    delayError: 300,
   });
 
   const onSubmit: SubmitHandler<ContactFormData> = async (data) => {
@@ -69,7 +68,6 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        {/* Page Title */}
         <div className="text-center mb-12 text-2xl">
           <Title t1={t("contact_us")} t2={t("us")} />
           <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
@@ -79,7 +77,6 @@ const ContactPage = () => {
 
         <div className="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Contact Information */}
             <div className="bg-gray-900 text-white p-8 lg:p-12">
               <h3 className="text-2xl font-bold mb-6">{t("get_in_touch")}</h3>
               <div className="space-y-6">
@@ -116,14 +113,12 @@ const ContactPage = () => {
               </div>
             </div>
 
-            {/* Contact Form */}
             <div className="p-8 lg:p-12">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
                 {t("send_message")}
               </h3>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Name Field */}
                 <div>
                   <label
                     htmlFor="name"
@@ -145,7 +140,6 @@ const ContactPage = () => {
                   )}
                 </div>
 
-                {/* Email Field */}
                 <div>
                   <label
                     htmlFor="email"
@@ -167,7 +161,6 @@ const ContactPage = () => {
                   )}
                 </div>
 
-                {/* Phone Field */}
                 <div>
                   <label
                     htmlFor="phone"
@@ -189,7 +182,6 @@ const ContactPage = () => {
                   )}
                 </div>
 
-                {/* Subject Field */}
                 <div>
                   <label
                     htmlFor="subject"
@@ -211,7 +203,6 @@ const ContactPage = () => {
                   )}
                 </div>
 
-                {/* Message Field */}
                 <div>
                   <label
                     htmlFor="message"
@@ -233,7 +224,6 @@ const ContactPage = () => {
                   )}
                 </div>
 
-                {/* Submit Button */}
                 <div>
                   <button
                     type="submit"
@@ -270,7 +260,6 @@ const ContactPage = () => {
                   </button>
                 </div>
 
-                {/* Root Error */}
                 {errors.root && (
                   <div className="text-center">
                     <p className="text-sm text-red-600">

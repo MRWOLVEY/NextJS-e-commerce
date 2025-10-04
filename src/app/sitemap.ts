@@ -1,7 +1,6 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Simple sitemap for learning project
   const baseUrl = "http://localhost:3000";
   const lastModified = new Date();
 

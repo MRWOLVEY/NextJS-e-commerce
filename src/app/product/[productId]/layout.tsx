@@ -1,6 +1,6 @@
 "use server";
 import { Metadata } from "next";
-import { products } from "@/data/products";
+import { getProduct } from "@/utils/api";
 import {
   generateProductWithBreadcrumbSchema,
   BreadcrumbItem,
@@ -15,7 +15,9 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productId } = await params;
-  const product = products.find((p) => p._id === productId);
+  const response = await getProduct(productId);
+  const product =
+    response.success && response.data ? response.data.product : null;
 
   if (!product) {
     return {
@@ -24,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const locale = "en"; // Default locale for metadata generation
+  const locale = "en";
   const productName = getProductName(product, locale);
   const productDescription = getProductDescription(product, locale);
   const baseUrl = "http://localhost:3000";
@@ -51,17 +53,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductLayout({ params, children }: Props) {
   const { productId } = await params;
-  const product = products.find((p) => p._id === productId);
+  const response = await getProduct(productId);
+  const product = response.success ? response.data?.product : null;
 
   if (!product) {
     return <>{children}</>;
   }
 
-  // Get locale from cookies
   const store = await cookies();
   const locale = store.get("locale")?.value || "en";
 
-  // Generate breadcrumbs based on actual site structure
   const getCategoryName = (type: string, locale: string) => {
     if (type === "apparel") {
       return locale === "ar" ? "الملابس" : "Apparel";
@@ -80,7 +81,6 @@ export default async function ProductLayout({ params, children }: Props) {
     { name: getProductName(product, locale), url: `/product/${productId}` },
   ];
 
-  // Generate structured data
   const structuredData = generateProductWithBreadcrumbSchema(
     product,
     breadcrumbs,

@@ -1,6 +1,6 @@
 import React from "react";
 import Title from "@/components/Title";
-import { assets } from "@/data/assets";
+import { getAssets } from "@/utils/api";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { generateMetadata as generateSEOMetadata } from "@/utils/seo";
@@ -24,6 +24,7 @@ const About = async () => {
   const cookieStore = await cookies();
   const locale = cookieStore.get("locale")?.value || "en";
   const t = await getTranslations({ locale, namespace: "About" });
+  const assets = await getAssets();
 
   return (
     <div className="bg-gray-50">
@@ -31,7 +32,10 @@ const About = async () => {
         <Title t1={t("title_part1")} t2={t("title_part2")} />
       </div>
       <div className="my-10 flex flex-col md:flex-row gap-16">
-        <img src={assets.about_img} className="w-full md:max-w-[450px]" />
+        <img
+          src={assets?.data?.about_img || "/images/about_img.png"}
+          className="w-full md:max-w-[450px]"
+        />
         <div className="flex flex-col justify-center gap-6 md:w-2/4 text-gray-600">
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,

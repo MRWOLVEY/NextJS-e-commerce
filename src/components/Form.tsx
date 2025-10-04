@@ -5,7 +5,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import z from "zod";
 
-// Create schema function that uses translations
 const createSchema = (t: any) =>
   z.object({
     firstName: z.string().min(4, { message: t("min_length_4") }),
@@ -34,9 +33,9 @@ const Form = () => {
     formState: { errors, isSubmitting, touchedFields },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    mode: "onBlur", // Validate on blur (less aggressive than onChange)
-    reValidateMode: "onChange", // Re-validate on change after first validation
-    delayError: 300, // Delay validation by 300ms to avoid flickering
+    mode: "onBlur",
+    reValidateMode: "onChange",
+    delayError: 300,
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
@@ -48,7 +47,6 @@ const Form = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-md mx-auto p-6 space-y-4"
     >
-      {/* First and Last Name */}
       <div className="flex gap-4">
         <div className="flex-1">
           <input
@@ -78,7 +76,6 @@ const Form = () => {
         </div>
       </div>
 
-      {/* Email */}
       <div>
         <input
           type="email"
@@ -93,7 +90,6 @@ const Form = () => {
         )}
       </div>
 
-      {/* Address */}
       <div>
         <input
           type="text"
@@ -108,7 +104,6 @@ const Form = () => {
         )}
       </div>
 
-      {/* City and Postal Code */}
       <div className="flex gap-4">
         <div className="flex-1">
           <input
@@ -138,7 +133,6 @@ const Form = () => {
         </div>
       </div>
 
-      {/* Country */}
       <div>
         <input
           type="text"
@@ -153,7 +147,6 @@ const Form = () => {
         )}
       </div>
 
-      {/* Phone */}
       <div>
         <input
           type="tel"
@@ -168,7 +161,6 @@ const Form = () => {
         )}
       </div>
 
-      {/* Submit Button */}
       <div>
         <button
           type="submit"
