@@ -4,6 +4,7 @@ import { getAssets } from "@/utils/api";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { generateMetadata as generateSEOMetadata } from "@/utils/seo";
+import Image from "next/image";
 
 export async function generateMetadata() {
   const cookieStore = await cookies();
@@ -32,9 +33,15 @@ const About = async () => {
         <Title t1={t("title_part1")} t2={t("title_part2")} />
       </div>
       <div className="my-10 flex flex-col md:flex-row gap-16">
-        <img
+        {/* <img
           src={assets?.data?.about_img || "/images/about_img.png"}
           className="w-full md:max-w-[450px]"
+        /> */}
+        <Image
+          src={assets?.data?.about_img}
+          alt="about image"
+          height={500}
+          width={400}
         />
         <div className="flex flex-col justify-center gap-6 md:w-2/4 text-gray-600">
           <p>
