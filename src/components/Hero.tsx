@@ -1,21 +1,18 @@
-"use client";
-import { useState, useEffect, use } from "react";
+import { Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
+import { SkeletonLoader } from "react-loadly";
+import HeroButton from "./HeroButton";
 import "react-loading-skeleton/dist/skeleton.css";
-
-import { useRouter } from "next/navigation";
 
 import React from "react";
 import Image from "next/image";
-import { useAssets } from "@/hooks/useApi";
+import { assets } from "@/data/assets";
+import { products } from "@/data/products";
 import TextType from "./text-type/TextType";
 import { useTranslations } from "next-intl";
 
-const Hero = () => {
-  const router = useRouter();
+const Hero = async () => {
   const t = useTranslations("Hero");
-  const { assets, loading: assetsLoading } = useAssets();
-  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <div
@@ -33,27 +30,20 @@ const Hero = () => {
           />
         </div>
         <div>
-          <button
-            className="flex items-center gap-2 cursor-pointer bg-amber-200 hover:bg-amber-100 transition-colors duration-100 p-2 rounded-2xl"
-            onClick={() => {
-              router.push("/category/apparel");
-            }}
-          >
-            <p className="font-semibold text-sm md:text-2xl">{t("shop_now")}</p>
-            <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p>
-          </button>
+          <HeroButton />
         </div>
       </div>
 
       <div className="w-full sm:w-1/2">
-        {loading && (
-          <Skeleton
-            width={200}
-            height={200}
-            containerClassName="flex flex-1 h-[26rem] justify-center items-center"
-          />
-        )}
-        {!loading && (
+        <Suspense
+          fallback={
+            <Skeleton
+              width={200}
+              height={200}
+              containerClassName="flex flex-1 h-[26rem] justify-center items-center"
+            />
+          }
+        >
           <Image
             className="w-full h-full object-cover"
             src={assets?.hero_img || "/images/hero_img.png"}
@@ -61,7 +51,7 @@ const Hero = () => {
             width={500}
             height={500}
           />
-        )}
+        </Suspense>
       </div>
     </div>
   );

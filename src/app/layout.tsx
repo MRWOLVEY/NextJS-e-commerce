@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import type { Metadata } from "next";
 import "./globals.css";
+import "react-loadly/styles.css";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import SEOHreflang from "@/components/SEOHreflang";
