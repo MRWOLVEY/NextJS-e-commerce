@@ -51,6 +51,7 @@ export default function ProductClient({
     }
 
     setTimeout(() => setIsAdding(false), 500);
+    // debounce to prevent multiple clicks
   };
 
   const handleAddToWhishlist = (data: any, size: any) => {
